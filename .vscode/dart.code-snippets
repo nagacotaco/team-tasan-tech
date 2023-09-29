@@ -1,0 +1,156 @@
+{
+    "domain_repo": {
+        "prefix": "domain_repo",
+        "scope": "dart",
+        "body": [
+            "/// [${1:CLASS_NAME}] defines an interface of a repository for [${2:MODEL_NAME}].",
+            "abstract class ${1:CLASS_NAME} {",
+            "  Future<${2:MODEL_NAME}> getById(String docId);",
+            "  Future<List<${2:MODEL_NAME}>> getAll();",
+            "  Future<void> insert(${2:MODEL_NAME} model);",
+            "  Future<void> update(${2:MODEL_NAME} model);",
+            "  Future<void> delete(${2:MODEL_NAME} model);",
+            "}",
+        ],
+    },
+    "@freezed": {
+        "prefix": "@freezed",
+        "scope": "dart",
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "part '$TM_FILENAME_BASE.freezed.dart';",
+            "",
+            "@freezed",
+            "class $1 with _$$1 {",
+            "  const $1._();",
+            "  const factory $1({",
+            "    @Default('') String docId,",
+            "",
+            "    @CreatedAtFieldConverter() DateTime? createdAt,",
+            "    @UpdatedAtFieldConverter() DateTime? updatedAt,",
+            "  }) = _$1;",
+            "}"
+        ]
+    },
+    "@freezed_json": {
+        "prefix": "@freezed_json",
+        "scope": "dart",
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "part '$TM_FILENAME_BASE.freezed.dart';",
+            "part '$TM_FILENAME_BASE.g.dart';",
+            "",
+            "@freezed",
+            "class ${1:Xxx} with _$${1:Xxx} {",
+            "  const $1._();",
+            "  const factory ${1:Xxx}({",
+            "    @Default('') String docId,",
+            "",
+            "    @CreatedAtFieldConverter() DateTime? createdAt,",
+            "    @UpdatedAtFieldConverter() DateTime? updatedAt,",
+            "  }) = _${1:Xxx};",
+            "  factory ${1:Xxx}.fromJson(Map<String, dynamic> json) => _$${1:Xxx}FromJson(json);",
+            "}"
+        ]
+    },
+    "dto": {
+        "prefix": "dto",
+        "scope": "dart",
+        "body": [
+            "import 'package:cloud_firestore/cloud_firestore.dart';",
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "part '$TM_FILENAME_BASE.freezed.dart';",
+            "part '$TM_FILENAME_BASE.g.dart';",
+            "",
+            "@freezed",
+            "class ${1:Xxx} with _$${1:Xxx} {",
+            "  const $1._();",
+            "  const factory ${1:Xxx}({",
+            "    @Default('') String docId,",
+            "",
+            "    @CreatedAtFieldConverter() DateTime? createdAt,",
+            "    @UpdatedAtFieldConverter() DateTime? updatedAt,",
+            "  }) = _${1:Xxx};",
+            "  factory ${1:Xxx}.fromJson(Map<String, dynamic> json) => _$${1:Xxx}FromJson(json);",
+            "",
+            "  // todo",
+            "  static const collectionPath = 'path';",
+            "",
+            "  factory ${1:Xxx}.fromSnapshot(",
+            "    DocumentSnapshot<Map<String, dynamic>> snapshot,",
+            "  ) {",
+            "    var json = Map<String, dynamic>.from(snapshot.data()!);",
+            "    json['docId'] = snapshot.id;",
+            "    return ${1:Xxx}.fromJson(json);",
+            "  }",
+            "",
+            "  // todo",
+            "  factory ${1:Xxx}.fromEntity(${1:Xxx}noEntity model) => ${1:Xxx}(",
+            "        docId: model.docId,",
+            "        createdAt: model.createdAt,",
+            "        updatedAt: model.updatedAt,",
+            "      );",
+            "",
+            "  // todo",
+            "  ${1:Xxx}noEntity toEntity() {",
+            "    return ${1:Xxx}noEntity(",
+            "      docId: docId,",
+            "      createdAt: createdAt,",
+            "      updatedAt: updatedAt,",
+            "    );",
+            "  }",
+            "}",
+        ]
+    },
+    "build_runner": {
+        "prefix": "build_runner",
+        "body": [
+            "flutter pub run build_runner build --delete-conflicting-outputs"
+        ]
+    },
+    "state_provider": {
+        "prefix": "state_provider",
+        "scope": "dart",
+        "body": [
+            "final $1Provider = StateProvider<int>((ref) {",
+            "  return 0;",
+            "});"
+        ]
+    },
+    "consumer": {
+        "prefix": "consumer",
+        "scope": "dart",
+        "body": [
+            "class $1 extends ConsumerWidget {",
+            "  const $1({",
+            "    super.key,",
+            "  });",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context, WidgetRef ref) {",
+            "    return Container();",
+            "  }",
+            "}"
+        ]
+    },
+    "enum_codable": {
+        "prefix": "enum_codable",
+        "scope": "dart",
+        "body": [
+            "enum $1 {",
+            "  aaa(0),",
+            "  bbb(1),",
+            "  ccc(2);",
+            "",
+            "  const $1(this.encoded);",
+            "  final int encoded;",
+            "  factory $1.fromJson(dynamic json) {",
+            "    return $1.values.firstWhere((value) {",
+            "      return value.encoded == json;",
+            "    });",
+            "  }",
+            "  dynamic toJson() => encoded;",
+            "}"
+        ]
+    }
+}

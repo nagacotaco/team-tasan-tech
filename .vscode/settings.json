@@ -1,0 +1,19 @@
+{
+    // フォーマット・保存
+    "editor.formatOnSave": true,
+    "[dart]": {
+        "editor.rulers": [
+            80
+        ]
+    },
+    // fvm settings
+    "dart.flutterSdkPath": ".fvm/flutter_sdk",
+    // Remove .fvm files from search
+    "search.exclude": {
+        "**/.fvm": true
+    },
+    // Remove from file watching
+    "files.watcherExclude": {
+        "**/.fvm": true
+    },
+}

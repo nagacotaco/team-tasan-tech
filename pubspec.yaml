@@ -1,0 +1,49 @@
+name: team_tasan_tech
+description: TasanTech project for hackathon
+
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: 
+  go_router:
+  riverpod_annotation: 
+  firebase_auth:
+  firebase_core:
+  cloud_firestore:
+  get_it:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 
+  riverpod_generator: 
+  build_runner: 
+  custom_lint: 
+  riverpod_lint:
+  freezed:
+  json_serializable:
+
+flutter:
+
+  uses-material-design: true
+
+
+  fonts:
+    - family: LineSeed
+      fonts:
+        - asset: assets/fonts/LINE_Seed_JP/LINESeedJP_A_TTF_Th.ttf
+          weight: 100
+        - asset: assets/fonts/LINE_Seed_JP/LINESeedJP_A_TTF_Rg.ttf
+          weight: 400
+        - asset: assets/fonts/LINE_Seed_JP/LINESeedJP_A_TTF_Bd.ttf
+          weight: 700
+        - asset: assets/fonts/LINE_Seed_JP/LINESeedJP_A_TTF_Eb.ttf
+          weight: 800

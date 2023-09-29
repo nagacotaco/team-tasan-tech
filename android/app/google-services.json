@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882673997244",
+    "project_id": "team-tasan-tech",
+    "storage_bucket": "team-tasan-tech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882673997244:android:8cc63a4366b62641d207b9",
+        "android_client_info": {
+          "package_name": "com.example.team_tasan_tech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmUmJJxZ3x9yFh98o0WJlECgy3DLRg_ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
