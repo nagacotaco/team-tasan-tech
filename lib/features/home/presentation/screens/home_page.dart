@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../routes/app_router.dart';
-import '../../../../shared/widgets/app_list_tile.dart';
 
 import '../../../../main.dart';
+import '../../../../routes/app_router.dart';
+import '../../../../shared/widgets/app_list_tile.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -60,6 +60,12 @@ class HomePage extends ConsumerWidget {
                       title: 'アップバー',
                       onTap: () => context.pushNamed(Routes.appBarSample.name),
                     ),
+                    AppListTile.nextPage(
+                      title: 'チャットページ',
+                      onTap: () => context.pushNamed(
+                        Routes.chat.name,
+                      ),
+                    )
                   ],
                 ),
               ),
