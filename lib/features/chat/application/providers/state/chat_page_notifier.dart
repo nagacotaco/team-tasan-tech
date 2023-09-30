@@ -24,6 +24,12 @@ class ChatPageNotifier extends _$ChatPageNotifier {
   /// 会話ラリーの回数カウンター
   int counter = 0;
 
+  /// 会話ラリーの上限
+  final int maxCounter = 10;
+
+  // 進捗（0.0 ~ 1.0）
+  double get progress => counter / maxCounter;
+
   /// chatGPTの全会話リスト
   /// 画面表示にも使用
   List<OpenAIChatCompletionChoiceMessageModel> chatGptModelList = [];
@@ -54,6 +60,7 @@ class ChatPageNotifier extends _$ChatPageNotifier {
   /// ユーザーが入力した文章の送信時処理
   Future<void> onSendMessage() async {
     debugPrint('chaGPTへメッセージを送信します。');
+    counter++;
     state = state.copyWith(
       conversationList: [
         ...state.conversationList,

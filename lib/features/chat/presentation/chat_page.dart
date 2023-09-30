@@ -10,7 +10,6 @@ import 'package:team_tasan_tech/routes/app_router.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
 import '../../../main.dart';
-import '../../../shared/widgets/app_image.dart';
 
 class ChatPage extends ConsumerWidget {
   const ChatPage({
@@ -19,36 +18,21 @@ class ChatPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const double textFormFieldHeight = 60.0;
+    double textFormFieldHeight = context.sizeHeight * .1;
     final pageState = ref.watch(chatPageNotifierProvider);
     final pageNotifier = ref.watch(chatPageNotifierProvider.notifier);
+    // 進捗を取得
+    final progress = ref.watch(chatPageNotifierProvider.notifier).progress;
+
     return Scaffold(
       body: SafeArea(
+        top: false,
         child: Column(
           children: [
             Expanded(
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [
-                  // * sample 1
-                  SliverAppBar(
-                    title: const Text(''),
-                    // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示defaultは`false`
-                    floating: false,
-                    toolbarHeight: $styles.dimens.appBarHeight,
-                  ),
-                  // * sample 2
-                  SliverAppBar(
-                    // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示
-                    floating: false,
-                    toolbarHeight: context.sizeHeight * .14,
-                    automaticallyImplyLeading: false,
-                    flexibleSpace: const AppImage(
-                        fit: BoxFit.fitWidth,
-                        image: NetworkImage(
-                            'https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')),
-                  ),
-                  // * sample 3
                   SliverAppBar(
                     title: Text(ref.read(homePageStateProvider).testMode ==
                             TestMode.specificTopic
@@ -58,30 +42,32 @@ class ChatPage extends ConsumerWidget {
                             .keyStringJp
                         : ref.read(themeProvider)),
                     toolbarHeight: $styles.dimens.appBarHeight,
-                    // falseでタイトル左側に表示
                     centerTitle: false,
                     automaticallyImplyLeading: false,
-                    // スクロール時にアップバーを固定
-                    pinned: true,
-                    actions: const [
-                      // IconButton(
-                      //     alignment: Alignment.topCenter,
-                      //     onPressed: () {},
-                      //     icon: const Icon(
-                      //       Icons.add,
-                      //     )),
-                      // IconButton(
-                      //     padding: EdgeInsets.all($styles.insets.p4),
-                      //     onPressed: () {},
-                      //     icon: const Icon(
-                      //       Icons.search,
-                      //     ))
-                    ],
+                    floating: true,
+                    actions: const [CloseButton()],
+                    bottom: PreferredSize(
+                      preferredSize: const Size.fromHeight(1),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: $styles.insets.p16),
+                        child: LinearProgressIndicator(
+                          value: progress,
+                          borderRadius:
+                              BorderRadius.circular($styles.corners.lg),
+                        ),
+                      ),
+                    ),
                   ),
+                  SliverList(
+                      delegate: SliverChildListDelegate([
+                    SizedBox(
+                      height: $styles.insets.p24,
+                    )
+                  ])),
                   SliverList.builder(
                     itemCount: pageState.conversationList.length,
                     itemBuilder: (context, i) {
-                      // if (i == 0) return const SizedBox.shrink();
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: $styles.insets.p16,
@@ -116,7 +102,6 @@ class ChatPage extends ConsumerWidget {
                 padding: EdgeInsets.symmetric(horizontal: $styles.insets.p16),
                 height: textFormFieldHeight,
                 width: context.sizeWidth,
-                color: $styles.colors.backgroundColors.accent,
                 child: Row(
                   children: [
                     Flexible(
@@ -125,26 +110,41 @@ class ChatPage extends ConsumerWidget {
                         controller: pageNotifier.userInputTextController,
                         maxLines: 5,
                         minLines: 1,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: $styles.insets.p12,
+                            vertical: $styles.insets.p8,
+                          ),
                           hintText: '会話文を入力する',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular($styles.corners.lg),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular($styles.corners.lg),
+                            borderSide: BorderSide(
+                              color: $styles.colors.keyColor.accent, // フォーカス時の色
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            // 非フォーカス時の枠線
+                            borderRadius:
+                                BorderRadius.circular($styles.corners.lg),
+                            borderSide: BorderSide(
+                              color: $styles
+                                  .colors.keyColor.accent, // 非フォーカス時の色を指定
+                            ),
+                          ),
                         ),
-                        validator: (value) {
-                          return null;
-
-                          // todo 空文字の場合はエラー返す（日本語がある場合どうする？）
-                          // final result = ValidationUtil.isValidEmail(value ?? '');
-                          // if (!result['isValid']) {
-                          //   return result['error'];
-                          // }
-                          // return null;
-                        },
                       ),
                     ),
                     SizedBox(width: $styles.insets.p8),
                     InkWell(
                       onTap: () async {
                         await pageNotifier.onSendMessage();
-                        if (!pageState.isLoading && pageNotifier.counter >= 3) {
+                        if (!pageState.isLoading &&
+                            pageNotifier.counter >= 10) {
                           // 完了した会話を保持
                           pageNotifier.setFinishedConversation();
                           // ignore: use_build_context_synchronously
@@ -152,13 +152,17 @@ class ChatPage extends ConsumerWidget {
                         }
                       },
                       child: Container(
-                        height: $styles.insets.p40,
-                        width: $styles.insets.p40,
+                        height: $styles.insets.p32,
+                        width: $styles.insets.p32,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: $styles.colors.keyColor.primary,
                         ),
-                        child: const Icon(Icons.arrow_upward),
+                        child: Icon(
+                          size: 20,
+                          Icons.arrow_upward,
+                          color: $styles.colors.backgroundColors.white,
+                        ),
                       ),
                     ),
                   ],

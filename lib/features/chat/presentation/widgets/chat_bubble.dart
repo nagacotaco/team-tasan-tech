@@ -46,7 +46,8 @@ class ChatBubble extends StatelessWidget {
         children: [
           Text(
             'あなたの回答: $score点',
-            style: $styles.text.labelLargeBold,
+            style: $styles.text.titleSmallBold
+                .copyWith(color: $styles.colors.functionalColors.success),
           ),
           SizedBox(height: $styles.insets.p2),
           Text(chatText, style: $styles.text.bodySmall),
@@ -55,7 +56,7 @@ class ChatBubble extends StatelessWidget {
           SizedBox(height: $styles.insets.p12),
           Text(
             '修正',
-            style: $styles.text.labelLargeBold.copyWith(
+            style: $styles.text.titleSmallBold.copyWith(
               color: $styles.colors.functionalColors.error,
             ),
           ),
@@ -82,23 +83,23 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: isUserComment ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.only(bottom: $styles.insets.p20),
+        margin: EdgeInsets.only(bottom: $styles.insets.p16),
         padding: EdgeInsets.all($styles.insets.p12),
         width: context.sizeWidth * 0.7,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: isUserComment
-                ? Radius.circular($styles.corners.sm)
+                ? Radius.circular($styles.corners.md)
                 : Radius.zero,
-            topRight: Radius.circular($styles.corners.sm),
-            bottomLeft: Radius.circular($styles.corners.sm),
+            topRight: Radius.circular($styles.corners.md),
+            bottomLeft: Radius.circular($styles.corners.md),
             bottomRight: isUserComment
                 ? Radius.zero
-                : Radius.circular($styles.corners.sm),
+                : Radius.circular($styles.corners.md),
           ),
           color: isUserComment
               ? $styles.colors.backgroundColors.accent
-              : $styles.colors.backgroundColors.white,
+              : $styles.colors.keyColor.tertiary,
         ),
         child: child,
       ),

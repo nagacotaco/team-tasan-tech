@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/current_conversation_provider.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/presentation/widgets/chat_bubble.dart';
-import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
+import 'package:team_tasan_tech/features/home/application/page_model/home_page_model.dart';
+import 'package:team_tasan_tech/features/home/application/provider/home_page_notifier.dart';
+import 'package:team_tasan_tech/shared/widgets/app_divider.dart';
 
 import '../../../main.dart';
 
@@ -18,62 +21,74 @@ class ReportPage extends ConsumerWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // * sample 1
             SliverAppBar(
-              title: const Text('シーンタイトルを受け取る'),
-              // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示defaultは`false`
-              floating: false,
+              title: Text(ref.read(homePageStateProvider).testMode ==
+                      TestMode.specificTopic
+                  ? ref.read(homePageStateProvider).currentTopic!.keyStringJp
+                  : ref.read(themeProvider)),
+              floating: true,
               toolbarHeight: $styles.dimens.appBarHeight,
             ),
-            // * sample 2
-            SliverAppBar(
-              // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示
-              floating: false,
-              toolbarHeight: context.sizeHeight * .10,
-              automaticallyImplyLeading: false,
-              flexibleSpace: Padding(
-                padding: EdgeInsets.only(left: $styles.insets.p12),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              SizedBox(
+                height: $styles.insets.p24,
+              ),
+              Padding(
+                padding: EdgeInsets.all($styles.insets.p16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: $styles.insets.p30),
-                    Text('Congratulations!',
-                        style: $styles.text.headlineMedium),
+                    Text(
+                      'お疲れさまでした🎈',
+                      style: $styles.text.headlineMedium,
+                    ),
+                    SizedBox(height: $styles.insets.p4),
+                    Text(
+                      'テストを振り返り復習しましょう。',
+                      style: $styles.text.titleMediumBold
+                          .copyWith(color: $styles.colors.textColors.tertiary),
+                    ),
                     SizedBox(height: $styles.insets.p20),
+                    Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 6,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular($styles.corners.sm),
+                            color: $styles.colors.keyColor.primary,
+                          ),
+                        ),
+                        SizedBox(width: $styles.insets.p8),
+                        Text('${chatState!.score}点',
+                            style: $styles.text.displayMedium),
+                      ],
+                    ),
+                    SizedBox(height: $styles.insets.p24),
+                    Text(
+                      '会話内容',
+                      style: $styles.text.titleMediumBold,
+                    ),
+                    SizedBox(height: $styles.insets.p12),
+                    const AppDivider(),
                   ],
                 ),
-              ),
-            ),
-            // * sample 3
-            SliverAppBar(
-              title: Container(
-                padding: EdgeInsets.only(left: $styles.insets.p12),
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: BorderSide(
-                      color: $styles.colors.keyColor.primary,
-                      width: $styles.insets.p6,
-                    ),
-                  ),
-                ),
-                child: Text('${chatState!.score}点',
-                    style: $styles.text.headlineLarge),
-              ),
-              toolbarHeight: $styles.dimens.appBarHeight,
-              // falseでタイトル左側に表示
-              centerTitle: false,
-              automaticallyImplyLeading: false,
-              // スクロール時にアップバーを固定
-              pinned: true,
-              actions: const [],
-            ),
+              )
+            ])),
             SliverList.builder(
               itemCount: conversationList!.length,
               itemBuilder: (context, i) {
                 if (i == 0) {
-                  return ChatBubble.normal(
-                    chatText: conversationList[i].res,
-                    isUserComment: false,
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $styles.insets.p16,
+                    ),
+                    child: ChatBubble.normal(
+                      chatText: conversationList[i].res,
+                      isUserComment: false,
+                    ),
                   );
                 }
                 return Padding(
