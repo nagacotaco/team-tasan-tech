@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:team_tasan_tech/models/domain/chat_gpt_respons_model.dart';
+import 'package:team_tasan_tech/models/domain/chat_gpt_conversation_model.dart';
 
 part 'chat_model.freezed.dart';
 part 'chat_model.g.dart';
@@ -11,8 +11,7 @@ class ChatModel with _$ChatModel {
     @Default('') String docId,
     @Default('') String theme,
     @Default(0) int score,
-    @Default([]) List<String> userCommentList,
-    @Default([]) List<ChatGptResponseModel> chatGptResList,
+    @Default([]) List<ChatGptConversationModel> conversationList,
     @Default([]) List<String> reviweList,
     @Default(true) bool canContinue,
     @Default(false) bool isStartFromUser,

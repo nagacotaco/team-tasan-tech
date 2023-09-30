@@ -8,7 +8,7 @@ import 'package:team_tasan_tech/features/chat/application/providers/level_provid
 import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/domain/use_cases/chat_gpt_use_case.dart';
 import 'package:team_tasan_tech/injector.dart';
-import 'package:team_tasan_tech/models/domain/chat_gpt_respons_model.dart';
+import 'package:team_tasan_tech/models/domain/chat_gpt_conversation_model.dart';
 import 'package:team_tasan_tech/models/domain/chat_model.dart';
 
 part 'chat_page_notifier.g.dart';
@@ -54,9 +54,12 @@ class ChatPageNotifier extends _$ChatPageNotifier {
   Future<void> onSendMessage() async {
     debugPrint('chaGPTへメッセージを送信します。');
     state = state.copyWith(
-      userCommentList: [
-        ...state.userCommentList,
-        userInputTextController.text,
+      conversationList: [
+        ...state.conversationList,
+        ChatGptConversationModel.fromJson({
+          'res': userInputTextController.text,
+          'role': 'user',
+        }),
       ],
       isLoading: true,
     );
@@ -87,11 +90,12 @@ class ChatPageNotifier extends _$ChatPageNotifier {
 
     // レスポンスをstateへ適応
     state = state.copyWith(
-      chatGptResList: [
-        ...state.chatGptResList,
-        ChatGptResponseModel.fromJson(json)
+      conversationList: [
+        ...state.conversationList,
+        ChatGptConversationModel.fromJson(json).copyWith(role: 'system')
       ],
       isLoading: false,
     );
+    print(state.conversationList);
   }
 }
