@@ -23,8 +23,7 @@ mixin _$ChatModel {
   String get docId => throw _privateConstructorUsedError;
   String get theme => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
-  List<String> get userCommentList => throw _privateConstructorUsedError;
-  List<ChatGptResponseModel> get chatGptResList =>
+  List<ChatGptConversationModel> get conversationList =>
       throw _privateConstructorUsedError;
   List<String> get reviweList => throw _privateConstructorUsedError;
   bool get canContinue => throw _privateConstructorUsedError;
@@ -47,8 +46,7 @@ abstract class $ChatModelCopyWith<$Res> {
       {String docId,
       String theme,
       int score,
-      List<String> userCommentList,
-      List<ChatGptResponseModel> chatGptResList,
+      List<ChatGptConversationModel> conversationList,
       List<String> reviweList,
       bool canContinue,
       bool isStartFromUser,
@@ -72,8 +70,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? docId = null,
     Object? theme = null,
     Object? score = null,
-    Object? userCommentList = null,
-    Object? chatGptResList = null,
+    Object? conversationList = null,
     Object? reviweList = null,
     Object? canContinue = null,
     Object? isStartFromUser = null,
@@ -93,14 +90,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
-      userCommentList: null == userCommentList
-          ? _value.userCommentList
-          : userCommentList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      chatGptResList: null == chatGptResList
-          ? _value.chatGptResList
-          : chatGptResList // ignore: cast_nullable_to_non_nullable
-              as List<ChatGptResponseModel>,
+      conversationList: null == conversationList
+          ? _value.conversationList
+          : conversationList // ignore: cast_nullable_to_non_nullable
+              as List<ChatGptConversationModel>,
       reviweList: null == reviweList
           ? _value.reviweList
           : reviweList // ignore: cast_nullable_to_non_nullable
@@ -137,8 +130,7 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       {String docId,
       String theme,
       int score,
-      List<String> userCommentList,
-      List<ChatGptResponseModel> chatGptResList,
+      List<ChatGptConversationModel> conversationList,
       List<String> reviweList,
       bool canContinue,
       bool isStartFromUser,
@@ -160,8 +152,7 @@ class __$$ChatModelImplCopyWithImpl<$Res>
     Object? docId = null,
     Object? theme = null,
     Object? score = null,
-    Object? userCommentList = null,
-    Object? chatGptResList = null,
+    Object? conversationList = null,
     Object? reviweList = null,
     Object? canContinue = null,
     Object? isStartFromUser = null,
@@ -181,14 +172,10 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
-      userCommentList: null == userCommentList
-          ? _value._userCommentList
-          : userCommentList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      chatGptResList: null == chatGptResList
-          ? _value._chatGptResList
-          : chatGptResList // ignore: cast_nullable_to_non_nullable
-              as List<ChatGptResponseModel>,
+      conversationList: null == conversationList
+          ? _value._conversationList
+          : conversationList // ignore: cast_nullable_to_non_nullable
+              as List<ChatGptConversationModel>,
       reviweList: null == reviweList
           ? _value._reviweList
           : reviweList // ignore: cast_nullable_to_non_nullable
@@ -220,15 +207,13 @@ class _$ChatModelImpl extends _ChatModel {
       {this.docId = '',
       this.theme = '',
       this.score = 0,
-      final List<String> userCommentList = const [],
-      final List<ChatGptResponseModel> chatGptResList = const [],
+      final List<ChatGptConversationModel> conversationList = const [],
       final List<String> reviweList = const [],
       this.canContinue = true,
       this.isStartFromUser = false,
       this.isLoading = false,
       this.day})
-      : _userCommentList = userCommentList,
-        _chatGptResList = chatGptResList,
+      : _conversationList = conversationList,
         _reviweList = reviweList,
         super._();
 
@@ -244,22 +229,14 @@ class _$ChatModelImpl extends _ChatModel {
   @override
   @JsonKey()
   final int score;
-  final List<String> _userCommentList;
+  final List<ChatGptConversationModel> _conversationList;
   @override
   @JsonKey()
-  List<String> get userCommentList {
-    if (_userCommentList is EqualUnmodifiableListView) return _userCommentList;
+  List<ChatGptConversationModel> get conversationList {
+    if (_conversationList is EqualUnmodifiableListView)
+      return _conversationList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_userCommentList);
-  }
-
-  final List<ChatGptResponseModel> _chatGptResList;
-  @override
-  @JsonKey()
-  List<ChatGptResponseModel> get chatGptResList {
-    if (_chatGptResList is EqualUnmodifiableListView) return _chatGptResList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_chatGptResList);
+    return EqualUnmodifiableListView(_conversationList);
   }
 
   final List<String> _reviweList;
@@ -285,7 +262,7 @@ class _$ChatModelImpl extends _ChatModel {
 
   @override
   String toString() {
-    return 'ChatModel(docId: $docId, theme: $theme, score: $score, userCommentList: $userCommentList, chatGptResList: $chatGptResList, reviweList: $reviweList, canContinue: $canContinue, isStartFromUser: $isStartFromUser, isLoading: $isLoading, day: $day)';
+    return 'ChatModel(docId: $docId, theme: $theme, score: $score, conversationList: $conversationList, reviweList: $reviweList, canContinue: $canContinue, isStartFromUser: $isStartFromUser, isLoading: $isLoading, day: $day)';
   }
 
   @override
@@ -297,9 +274,7 @@ class _$ChatModelImpl extends _ChatModel {
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.score, score) || other.score == score) &&
             const DeepCollectionEquality()
-                .equals(other._userCommentList, _userCommentList) &&
-            const DeepCollectionEquality()
-                .equals(other._chatGptResList, _chatGptResList) &&
+                .equals(other._conversationList, _conversationList) &&
             const DeepCollectionEquality()
                 .equals(other._reviweList, _reviweList) &&
             (identical(other.canContinue, canContinue) ||
@@ -318,8 +293,7 @@ class _$ChatModelImpl extends _ChatModel {
       docId,
       theme,
       score,
-      const DeepCollectionEquality().hash(_userCommentList),
-      const DeepCollectionEquality().hash(_chatGptResList),
+      const DeepCollectionEquality().hash(_conversationList),
       const DeepCollectionEquality().hash(_reviweList),
       canContinue,
       isStartFromUser,
@@ -345,8 +319,7 @@ abstract class _ChatModel extends ChatModel {
       {final String docId,
       final String theme,
       final int score,
-      final List<String> userCommentList,
-      final List<ChatGptResponseModel> chatGptResList,
+      final List<ChatGptConversationModel> conversationList,
       final List<String> reviweList,
       final bool canContinue,
       final bool isStartFromUser,
@@ -364,9 +337,7 @@ abstract class _ChatModel extends ChatModel {
   @override
   int get score;
   @override
-  List<String> get userCommentList;
-  @override
-  List<ChatGptResponseModel> get chatGptResList;
+  List<ChatGptConversationModel> get conversationList;
   @override
   List<String> get reviweList;
   @override

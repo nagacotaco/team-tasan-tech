@@ -11,13 +11,9 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
       docId: json['docId'] as String? ?? '',
       theme: json['theme'] as String? ?? '',
       score: json['score'] as int? ?? 0,
-      userCommentList: (json['userCommentList'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      chatGptResList: (json['chatGptResList'] as List<dynamic>?)
+      conversationList: (json['conversationList'] as List<dynamic>?)
               ?.map((e) =>
-                  ChatGptResponseModel.fromJson(e as Map<String, dynamic>))
+                  ChatGptConversationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       reviweList: (json['reviweList'] as List<dynamic>?)
@@ -35,8 +31,7 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'docId': instance.docId,
       'theme': instance.theme,
       'score': instance.score,
-      'userCommentList': instance.userCommentList,
-      'chatGptResList': instance.chatGptResList,
+      'conversationList': instance.conversationList,
       'reviweList': instance.reviweList,
       'canContinue': instance.canContinue,
       'isStartFromUser': instance.isStartFromUser,
