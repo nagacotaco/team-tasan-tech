@@ -21,70 +21,73 @@ class ChatPage extends ConsumerWidget {
     final pageNotifier = ref.watch(chatPageNotifierProvider.notifier);
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                // * sample 1
-                SliverAppBar(
-                  title: const Text(''),
-                  // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示defaultは`false`
-                  floating: false,
-                  toolbarHeight: $styles.dimens.appBarHeight,
-                ),
-                // * sample 2
-                SliverAppBar(
-                  // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示
-                  floating: false,
-                  toolbarHeight: context.sizeHeight * .14,
-                  automaticallyImplyLeading: false,
-                  flexibleSpace: const AppImage(
-                      fit: BoxFit.fitWidth,
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')),
-                ),
-                // * sample 3
-                SliverAppBar(
-                  title: Text(ref.read(themeProvider)),
-                  toolbarHeight: $styles.dimens.appBarHeight,
-                  // falseでタイトル左側に表示
-                  centerTitle: false,
-                  automaticallyImplyLeading: false,
-                  // スクロール時にアップバーを固定
-                  pinned: true,
-                  actions: const [
-                    // IconButton(
-                    //     alignment: Alignment.topCenter,
-                    //     onPressed: () {},
-                    //     icon: const Icon(
-                    //       Icons.add,
-                    //     )),
-                    // IconButton(
-                    //     padding: EdgeInsets.all($styles.insets.p4),
-                    //     onPressed: () {},
-                    //     icon: const Icon(
-                    //       Icons.search,
-                    //     ))
-                  ],
-                ),
-                SliverList.builder(
-                  itemCount: pageNotifier.chatGptModelList.length,
-                  itemBuilder: (context, i) {
-                    if (i == 0) return const SizedBox.shrink();
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: $styles.insets.p16,
-                      ),
-                      child: ChatBubble.normal(
-                        chatText: pageNotifier.chatGptModelList[i].content,
-                        isUserComment: pageNotifier.chatGptModelList[i].role ==
-                            OpenAIChatMessageRole.user,
-                      ),
-                    );
-                  },
-                ),
-              ],
+            Expanded(
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  // * sample 1
+                  SliverAppBar(
+                    title: const Text(''),
+                    // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示defaultは`false`
+                    floating: false,
+                    toolbarHeight: $styles.dimens.appBarHeight,
+                  ),
+                  // * sample 2
+                  SliverAppBar(
+                    // trueの場合、ユーザーが下にスクロールするとアプリバーはすぐに表示
+                    floating: false,
+                    toolbarHeight: context.sizeHeight * .14,
+                    automaticallyImplyLeading: false,
+                    flexibleSpace: const AppImage(
+                        fit: BoxFit.fitWidth,
+                        image: NetworkImage(
+                            'https://images.unsplash.com/photo-1682687221073-53ad74c2cad7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')),
+                  ),
+                  // * sample 3
+                  SliverAppBar(
+                    title: Text(ref.read(themeProvider)),
+                    toolbarHeight: $styles.dimens.appBarHeight,
+                    // falseでタイトル左側に表示
+                    centerTitle: false,
+                    automaticallyImplyLeading: false,
+                    // スクロール時にアップバーを固定
+                    pinned: true,
+                    actions: const [
+                      // IconButton(
+                      //     alignment: Alignment.topCenter,
+                      //     onPressed: () {},
+                      //     icon: const Icon(
+                      //       Icons.add,
+                      //     )),
+                      // IconButton(
+                      //     padding: EdgeInsets.all($styles.insets.p4),
+                      //     onPressed: () {},
+                      //     icon: const Icon(
+                      //       Icons.search,
+                      //     ))
+                    ],
+                  ),
+                  SliverList.builder(
+                    itemCount: pageNotifier.chatGptModelList.length,
+                    itemBuilder: (context, i) {
+                      if (i == 0) return const SizedBox.shrink();
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: $styles.insets.p16,
+                        ),
+                        child: ChatBubble.normal(
+                          chatText: pageNotifier.chatGptModelList[i].content,
+                          isUserComment:
+                              pageNotifier.chatGptModelList[i].role ==
+                                  OpenAIChatMessageRole.user,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
