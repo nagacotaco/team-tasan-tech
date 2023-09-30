@@ -20,9 +20,6 @@ class ChatPageNotifier extends _$ChatPageNotifier {
   /// ユーザー入力文章
   final userInputTextController = TextEditingController();
 
-  /// ローディング状況で画面描画を制御
-  bool isLoading = false;
-
   /// 会話ラリーの回数カウンター
   int counter = 0;
 
@@ -36,9 +33,10 @@ class ChatPageNotifier extends _$ChatPageNotifier {
       userInputTextController.dispose();
     });
     initChatGpt(ref.read(themeProvider), ref.read(levelProvider));
-    return const ChatModel();
+    return const ChatModel(isLoading: true);
   }
 
+  /// 画面遷移直後の初期化処理
   Future<void> initChatGpt(String theme, String level) async {
     debugPrint('chatGPTを初期化します');
     chatGptModelList.add(
@@ -49,16 +47,19 @@ class ChatPageNotifier extends _$ChatPageNotifier {
         role: OpenAIChatMessageRole.user,
       ),
     );
-    sendFunction();
+    await sendFunction();
   }
 
   /// ユーザーが入力した文章の送信時処理
   Future<void> onSendMessage() async {
     debugPrint('chaGPTへメッセージを送信します。');
-    state = state.copyWith(userCommentList: [
-      ...state.userCommentList,
-      userInputTextController.text,
-    ]);
+    state = state.copyWith(
+      userCommentList: [
+        ...state.userCommentList,
+        userInputTextController.text,
+      ],
+      isLoading: true,
+    );
 
     final newMessageModel = OpenAIChatCompletionChoiceMessageModel(
       content: userInputTextController.text,
@@ -69,11 +70,11 @@ class ChatPageNotifier extends _$ChatPageNotifier {
     userInputTextController.clear();
 
     chatGptModelList.add(newMessageModel);
-    sendFunction();
+    await sendFunction();
   }
 
   Future<void> sendFunction() async {
-// chatGPTへ送信
+    // chatGPTへ送信
     final response = await _chatGptUseCase.sendMessage(chatGptModelList);
     print(response);
     // 返答をjson化
@@ -90,35 +91,7 @@ class ChatPageNotifier extends _$ChatPageNotifier {
         ...state.chatGptResList,
         ChatGptResponseModel.fromJson(json)
       ],
+      isLoading: false,
     );
   }
-
-  /// chatGPT送信前のプロンプト処理
-  /// これまでの履歴を含んだプロンプトを再構築
-  String convertModelToPrompt() {
-    const res = '';
-    return res;
-  }
 }
-
-final dummyChatModel = ChatModel(
-  theme: '新しいギターを買いたい',
-  day: DateTime.now(),
-  userCommentList: [
-    'I have 30000 yen.',
-    "I have a Les Paul now and I'd like a strat type.",
-  ],
-  chatGptResList: [
-    const ChatGptResponseModel(
-      correct: '',
-      reason: '',
-      res: 'Good! What is your budget?',
-    ),
-    const ChatGptResponseModel(
-      correct: 'Budget is 30,000 yen.',
-      reason: '予算の英語は"budget"です。このような単語を使用したほうが望ましいですが、おっしゃった回答でも問題はありません。',
-      res: 'Great! What kind of guiter type do you want?',
-    ),
-    const ChatGptResponseModel(correct: '', reason: '', res: ''),
-  ],
-);

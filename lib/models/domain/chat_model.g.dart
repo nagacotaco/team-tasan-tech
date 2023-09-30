@@ -26,6 +26,7 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
           const [],
       canContinue: json['canContinue'] as bool? ?? true,
       isStartFromUser: json['isStartFromUser'] as bool? ?? false,
+      isLoading: json['isLoading'] as bool? ?? false,
       day: json['day'] == null ? null : DateTime.parse(json['day'] as String),
     );
 
@@ -39,5 +40,6 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'reviweList': instance.reviweList,
       'canContinue': instance.canContinue,
       'isStartFromUser': instance.isStartFromUser,
+      'isLoading': instance.isLoading,
       'day': instance.day?.toIso8601String(),
     };

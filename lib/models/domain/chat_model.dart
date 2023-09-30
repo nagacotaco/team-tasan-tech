@@ -16,6 +16,7 @@ class ChatModel with _$ChatModel {
     @Default([]) List<String> reviweList,
     @Default(true) bool canContinue,
     @Default(false) bool isStartFromUser,
+    @Default(false) bool isLoading,
     DateTime? day,
   }) = _ChatModel;
   factory ChatModel.fromJson(Map<String, dynamic> json) =>
