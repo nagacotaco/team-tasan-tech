@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/current_conversation_provider.dart';
 import 'package:team_tasan_tech/features/chat/presentation/widgets/chat_bubble.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
 import '../../../main.dart';
-import '../application/providers/state/chat_page_notifier.dart';
 
-class ReportPage extends StatelessWidget {
+class ReportPage extends ConsumerWidget {
   const ReportPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatState = ref.watch(currentConversationProvider);
+    final conversationList = chatState?.conversationList;
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -53,7 +56,8 @@ class ReportPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('80点', style: $styles.text.headlineLarge),
+                child: Text('${chatState!.score}点',
+                    style: $styles.text.headlineLarge),
               ),
               toolbarHeight: $styles.dimens.appBarHeight,
               // falseでタイトル左側に表示
@@ -64,11 +68,11 @@ class ReportPage extends StatelessWidget {
               actions: const [],
             ),
             SliverList.builder(
-              itemCount: dummyChatModel.conversationList.length,
+              itemCount: conversationList!.length,
               itemBuilder: (context, i) {
                 if (i == 0) {
                   return ChatBubble.normal(
-                    chatText: dummyChatModel.conversationList[i].res,
+                    chatText: conversationList[i].res,
                     isUserComment: false,
                   );
                 }
@@ -78,15 +82,13 @@ class ReportPage extends StatelessWidget {
                   ),
                   child: i % 2 != 0
                       ? ChatBubble.report(
-                          chatText: dummyChatModel.conversationList[i].res,
-                          correctText:
-                              dummyChatModel.conversationList[i + 1].correct,
-                          reasonText:
-                              dummyChatModel.conversationList[i + 1].reason,
-                          score: dummyChatModel.conversationList[i + 1].score,
+                          chatText: conversationList[i].res,
+                          correctText: conversationList[i + 1].correct,
+                          reasonText: conversationList[i + 1].reason,
+                          score: conversationList[i + 1].score,
                         )
                       : ChatBubble.normal(
-                          chatText: dummyChatModel.conversationList[i].res,
+                          chatText: conversationList[i].res,
                           isUserComment: false,
                         ),
                 );

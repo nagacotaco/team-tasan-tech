@@ -4,6 +4,7 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:team_tasan_tech/app/app_strings.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/current_conversation_provider.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/level_provider.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/domain/use_cases/chat_gpt_use_case.dart';
@@ -97,6 +98,19 @@ class ChatPageNotifier extends _$ChatPageNotifier {
       isLoading: false,
     );
     print(state.conversationList);
+  }
+
+  void setFinishedConversation() {
+    double totalScore = 0;
+    for (var conversation in state.conversationList) {
+      totalScore = totalScore + conversation.score;
+    }
+    ref.read(currentConversationProvider.notifier).state = state.copyWith(
+      score: (totalScore - 100) ~/
+          state.conversationList
+              .where((element) => element.role == 'user')
+              .length, // 初回の強制100点をマイナス
+    );
   }
 }
 

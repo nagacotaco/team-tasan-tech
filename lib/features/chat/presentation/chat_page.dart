@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/state/chat_page_notifier.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/presentation/widgets/chat_bubble.dart';
+import 'package:team_tasan_tech/routes/app_router.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
 import '../../../main.dart';
@@ -132,10 +134,11 @@ class ChatPage extends ConsumerWidget {
                     InkWell(
                       onTap: () async {
                         await pageNotifier.onSendMessage();
-                        if (pageNotifier.counter == 4) {
+                        if (!pageState.isLoading && pageNotifier.counter >= 3) {
+                          // 完了した会話を保持
+                          pageNotifier.setFinishedConversation();
                           // ignore: use_build_context_synchronously
-                          // TODO: 遷移を追加
-                          // context.pushNamed(Routes.appBarSample.name);
+                          context.pushNamed(Routes.report.name);
                         }
                       },
                       child: Container(
