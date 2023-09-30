@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:team_tasan_tech/features/chat/presentation/chat_page.dart';
 
 import '../../../../shared/widgets/app_bottom_navigation.dart';
 import '../../../account/presentation/account_page.dart';
@@ -43,8 +42,6 @@ class _BottomNavigationPageControllerState
     switch (_currentIndex) {
       case 0:
         return const HomePage();
-      case 1:
-        return const ChatPage();
       case 2:
         return const AccountPage();
       default:

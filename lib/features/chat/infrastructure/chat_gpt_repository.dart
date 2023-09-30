@@ -6,7 +6,7 @@ class ChatGptRepository implements ChatGptRepo {
   Future<OpenAIChatCompletionModel> sendMessage(
       List<OpenAIChatCompletionChoiceMessageModel> messages) async {
     return await OpenAI.instance.chat.create(
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
       messages: messages,
     );
   }

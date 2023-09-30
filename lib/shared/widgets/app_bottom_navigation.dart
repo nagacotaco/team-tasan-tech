@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../main.dart';
 
 class AppBottomNavigation extends StatelessWidget {
@@ -14,22 +15,23 @@ class AppBottomNavigation extends StatelessWidget {
     return NavigationBar(
       destinations: [
         NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            label: 'ホーム',
-            selectedIcon:
-                Icon(Icons.home, color: $styles.colors.keyColor.primary)),
-        NavigationDestination(
           icon: const Icon(Icons.smart_toy_outlined),
           label: '会話テスト',
           selectedIcon:
               Icon(Icons.smart_toy, color: $styles.colors.keyColor.primary),
         ),
         NavigationDestination(
+          icon: const Icon(Icons.history_outlined),
+          label: 'レポート',
+          selectedIcon:
+              Icon(Icons.history, color: $styles.colors.keyColor.primary),
+        ),
+        NavigationDestination(
           icon: const Icon(Icons.settings_outlined),
           label: '設定',
           selectedIcon:
               Icon(Icons.settings, color: $styles.colors.keyColor.primary),
-        )
+        ),
       ],
       selectedIndex: currentIndex,
       onDestinationSelected: (index) => onTapped(index),
