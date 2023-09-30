@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:team_tasan_tech/features/auth/presentation/views/create_account_page.dart';
+import 'package:team_tasan_tech/features/chat/presentation/chat_page.dart';
 import 'package:team_tasan_tech/features/samples/app_bar_sample/app_bar_sample.dart';
 import 'package:team_tasan_tech/features/samples/list_tile_sample/list_tile_sample.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/account/presentation/account_page.dart';
 import '../features/auth/presentation/views/login_page.dart';
@@ -27,6 +28,9 @@ enum Routes {
   listTileSample,
   appBarSample,
   createAccount,
+
+  ///
+  chat,
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -90,6 +94,13 @@ GoRouter goRouter(GoRouterRef ref) {
         name: Routes.createAccount.name,
         builder: (context, state) => const CreateAccountPage(),
       ),
+
+      /// ハッカソン作成分
+      GoRoute(
+        path: '/chat',
+        name: Routes.chat.name,
+        builder: (context, state) => const ChatPage(),
+      )
     ],
     redirect: (context, state) async {
       if (FirebaseAuth.instance.currentUser == null &&
