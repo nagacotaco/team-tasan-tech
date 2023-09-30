@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/state/chat_page_notifier.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/presentation/widgets/chat_bubble.dart';
+import 'package:team_tasan_tech/features/home/application/page_model/home_page_model.dart';
+import 'package:team_tasan_tech/features/home/application/provider/home_page_notifier.dart';
 import 'package:team_tasan_tech/routes/app_router.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
@@ -48,7 +50,13 @@ class ChatPage extends ConsumerWidget {
                   ),
                   // * sample 3
                   SliverAppBar(
-                    title: Text(ref.read(themeProvider)),
+                    title: Text(ref.read(homePageStateProvider).testMode ==
+                            TestMode.specificTopic
+                        ? ref
+                            .read(homePageStateProvider)
+                            .currentTopic!
+                            .keyStringJp
+                        : ref.read(themeProvider)),
                     toolbarHeight: $styles.dimens.appBarHeight,
                     // falseでタイトル左側に表示
                     centerTitle: false,

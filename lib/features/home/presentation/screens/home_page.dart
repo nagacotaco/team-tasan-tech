@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/level_provider.dart';
+import 'package:team_tasan_tech/features/home/domain/enum/themes.dart';
 import 'package:team_tasan_tech/features/home/presentation/widgets/bottom_sheet_menu.dart';
 import 'package:team_tasan_tech/features/home/presentation/widgets/scene_chip.dart';
+import 'package:team_tasan_tech/routes/app_router.dart';
 
-import '../../application/page_model/home_page_model.dart';
-import '../../application/provider/home_page_notifier.dart';
+import '../../../../main.dart';
 import '../../../../shared/widgets/app_bottom_sheet.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_divider.dart';
-
-import '../../../../main.dart';
+import '../../application/page_model/home_page_model.dart';
+import '../../application/provider/home_page_notifier.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -133,6 +136,8 @@ class HomePage extends ConsumerWidget {
                     // * モード切り替え
                     homePageState.testMode == TestMode.freeTopic
                         ? TextFormField(
+                            controller:
+                                homePageStateNotifier.themeInputController,
                             decoration: InputDecoration(
                               hintText: '例）入国審査の会話',
                               hintStyle: $styles.text.titleMediumBold.copyWith(
@@ -143,57 +148,31 @@ class HomePage extends ConsumerWidget {
                         : Wrap(
                             runSpacing: $styles.insets.p8,
                             spacing: $styles.insets.p8,
-                            children: [
-                              SceneChip(
-                                onTap: () {},
+                            children: List.generate(
+                              Themes.values.length,
+                              (index) => SceneChip(
+                                onTap: () {
+                                  homePageStateNotifier.updateCurrentTopic(
+                                    Themes.values[index],
+                                  );
+                                  homePageStateNotifier.settingConversation();
+                                  context.pushNamed(Routes.chat.name);
+                                },
                                 title: Text(
-                                  'ニューヨークのホテルで 🏨',
+                                  Themes.values[index].keyStringJp,
                                   style: $styles.text.labelMediumBold,
                                 ),
                               ),
-                              SceneChip(
-                                onTap: () {},
-                                title: Text(
-                                  '金曜の夜 👯‍♀',
-                                  style: $styles.text.labelMediumBold,
-                                ),
-                              ),
-                              SceneChip(
-                                onTap: () {},
-                                title: Text(
-                                  '美術館で 🎨',
-                                  style: $styles.text.labelMediumBold,
-                                ),
-                              ),
-                              SceneChip(
-                                onTap: () {},
-                                title: Text(
-                                  '英語で採用面接に挑戦 👔',
-                                  style: $styles.text.labelMediumBold,
-                                ),
-                              ),
-                              SceneChip(
-                                onTap: () {},
-                                title: Text(
-                                  '自己紹介の実践 🦄',
-                                  style: $styles.text.labelMediumBold,
-                                ),
-                              ),
-                              SceneChip(
-                                onTap: () {},
-                                title: Text(
-                                  '友達に電話で今週末の予定を尋ねる 🫶',
-                                  style: $styles.text.labelMediumBold,
-                                ),
-                              ),
-                            ],
-                          ),
+                            )),
                     SizedBox(height: $styles.insets.p8),
                     const Spacer(),
                     homePageState.testMode == TestMode.freeTopic
                         ? AppButton.solid(
                             label: '会話を始める',
-                            onTap: () {},
+                            onTap: () {
+                              homePageStateNotifier.settingConversation();
+                              context.pushNamed(Routes.chat.name);
+                            },
                           )
                         : const SizedBox.shrink(),
                     SizedBox(height: $styles.insets.p16),

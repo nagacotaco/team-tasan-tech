@@ -22,7 +22,7 @@ HomePageModel _$HomePageModelFromJson(Map<String, dynamic> json) {
 mixin _$HomePageModel {
   String get username => throw _privateConstructorUsedError;
   TestLevel get level => throw _privateConstructorUsedError;
-  String get currentTopic => throw _privateConstructorUsedError;
+  Themes? get currentTopic => throw _privateConstructorUsedError;
   TestMode get testMode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $HomePageModelCopyWith<$Res> {
   $Res call(
       {String username,
       TestLevel level,
-      String currentTopic,
+      Themes? currentTopic,
       TestMode testMode});
 }
 
@@ -59,7 +59,7 @@ class _$HomePageModelCopyWithImpl<$Res, $Val extends HomePageModel>
   $Res call({
     Object? username = null,
     Object? level = null,
-    Object? currentTopic = null,
+    Object? currentTopic = freezed,
     Object? testMode = null,
   }) {
     return _then(_value.copyWith(
@@ -71,10 +71,10 @@ class _$HomePageModelCopyWithImpl<$Res, $Val extends HomePageModel>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as TestLevel,
-      currentTopic: null == currentTopic
+      currentTopic: freezed == currentTopic
           ? _value.currentTopic
           : currentTopic // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Themes?,
       testMode: null == testMode
           ? _value.testMode
           : testMode // ignore: cast_nullable_to_non_nullable
@@ -94,7 +94,7 @@ abstract class _$$HomePageModelImplCopyWith<$Res>
   $Res call(
       {String username,
       TestLevel level,
-      String currentTopic,
+      Themes? currentTopic,
       TestMode testMode});
 }
 
@@ -111,7 +111,7 @@ class __$$HomePageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? level = null,
-    Object? currentTopic = null,
+    Object? currentTopic = freezed,
     Object? testMode = null,
   }) {
     return _then(_$HomePageModelImpl(
@@ -123,10 +123,10 @@ class __$$HomePageModelImplCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as TestLevel,
-      currentTopic: null == currentTopic
+      currentTopic: freezed == currentTopic
           ? _value.currentTopic
           : currentTopic // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Themes?,
       testMode: null == testMode
           ? _value.testMode
           : testMode // ignore: cast_nullable_to_non_nullable
@@ -141,7 +141,7 @@ class _$HomePageModelImpl implements _HomePageModel {
   const _$HomePageModelImpl(
       {this.username = '',
       this.level = TestLevel.beginner,
-      this.currentTopic = '',
+      this.currentTopic,
       this.testMode = TestMode.specificTopic});
 
   factory _$HomePageModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -154,8 +154,7 @@ class _$HomePageModelImpl implements _HomePageModel {
   @JsonKey()
   final TestLevel level;
   @override
-  @JsonKey()
-  final String currentTopic;
+  final Themes? currentTopic;
   @override
   @JsonKey()
   final TestMode testMode;
@@ -202,7 +201,7 @@ abstract class _HomePageModel implements HomePageModel {
   const factory _HomePageModel(
       {final String username,
       final TestLevel level,
-      final String currentTopic,
+      final Themes? currentTopic,
       final TestMode testMode}) = _$HomePageModelImpl;
 
   factory _HomePageModel.fromJson(Map<String, dynamic> json) =
@@ -213,7 +212,7 @@ abstract class _HomePageModel implements HomePageModel {
   @override
   TestLevel get level;
   @override
-  String get currentTopic;
+  Themes? get currentTopic;
   @override
   TestMode get testMode;
   @override

@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 class AppStrings {
-  static const String appName = '';
+  static const String appName = 'Team Tasan Tech';
 }
 
 class FirebaseAuthErrorStrings {
