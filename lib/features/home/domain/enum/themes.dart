@@ -23,15 +23,15 @@ enum Themes {
   String get keyStringJp {
     switch (this) {
       case Themes.shibuya:
-        return '渋谷駅で海外旅行者を助ける';
+        return '渋谷駅で海外旅行者を助ける💁';
       case Themes.weekend:
-        return '友人に今週末の予定を話す';
+        return '友人に今週末の予定を話す📅';
       case Themes.phone:
-        return '新しいスマホを買う';
+        return '新しいスマホを買う📱';
       case Themes.friend:
-        return '友人との金曜日';
+        return '友人との金曜日💬';
       case Themes.hackathon:
-        return 'ハッカソンの懇親会にて';
+        return 'ハッカソンの懇親会にて🐱‍💻';
     }
   }
 }

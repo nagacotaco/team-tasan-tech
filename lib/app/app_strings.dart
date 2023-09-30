@@ -53,12 +53,12 @@ Rate my English sentence. The score should be an integer between 0 and 100. If t
 
 # My initial statement: “Hello.”
 
-# Output Format:
+# Output Format(Json):
 {
-	"correct": "output text",
-	"reason": "output text",
-	"res": "output text", 
-  "score": output int,
+"correct": "output text",
+"reason": "output text",
+"res": "output text", 
+"score": output int
 }
 ''';
 }
