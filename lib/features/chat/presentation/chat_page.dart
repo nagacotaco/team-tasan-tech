@@ -1,4 +1,3 @@
-import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/state/chat_page_notifier.dart';
@@ -70,18 +69,17 @@ class ChatPage extends ConsumerWidget {
                     ],
                   ),
                   SliverList.builder(
-                    itemCount: pageNotifier.chatGptModelList.length,
+                    itemCount: pageState.conversationList.length,
                     itemBuilder: (context, i) {
-                      if (i == 0) return const SizedBox.shrink();
+                      // if (i == 0) return const SizedBox.shrink();
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: $styles.insets.p16,
                         ),
                         child: ChatBubble.normal(
-                          chatText: pageNotifier.chatGptModelList[i].content,
+                          chatText: pageState.conversationList[i].res,
                           isUserComment:
-                              pageNotifier.chatGptModelList[i].role ==
-                                  OpenAIChatMessageRole.user,
+                              pageState.conversationList[i].role == 'user',
                         ),
                       );
                     },
@@ -93,7 +91,7 @@ class ChatPage extends ConsumerWidget {
                               horizontal: $styles.insets.p16,
                             ),
                             child: ChatBubble.normal(
-                              chatText: '{"res": "....."}',
+                              chatText: '.....',
                               isUserComment: false,
                             ),
                           )

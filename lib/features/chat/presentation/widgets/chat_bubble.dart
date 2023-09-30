@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
@@ -28,10 +26,9 @@ class ChatBubble extends StatelessWidget {
     required bool isUserComment,
   }) {
     return ChatBubble(
-      chatText: isUserComment ? chatText : jsonDecode(chatText)['res'],
+      chatText: chatText,
       isUserComment: isUserComment,
-      child: Text(isUserComment ? chatText : jsonDecode(chatText)['res'],
-          style: $styles.text.bodySmall),
+      child: Text(chatText, style: $styles.text.bodySmall),
     );
   }
 
@@ -43,7 +40,7 @@ class ChatBubble extends StatelessWidget {
     required bool isUserComment,
   }) {
     return ChatBubble(
-      chatText: isUserComment ? chatText : jsonDecode(chatText)['res'],
+      chatText: chatText,
       isUserComment: isUserComment,
       child: Column(
         children: [
@@ -52,8 +49,7 @@ class ChatBubble extends StatelessWidget {
             style: $styles.text.labelLargeBold,
           ),
           SizedBox(height: $styles.insets.p2),
-          Text(isUserComment ? chatText : jsonDecode(chatText)['res'],
-              style: $styles.text.bodySmall),
+          Text(chatText, style: $styles.text.bodySmall),
           SizedBox(height: $styles.insets.p12),
           const AppDivider(),
           SizedBox(height: $styles.insets.p12),
