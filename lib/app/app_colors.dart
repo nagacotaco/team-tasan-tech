@@ -24,7 +24,7 @@ class _KeyColors {
 @immutable
 class _FunctionalColors {
   const _FunctionalColors();
-  Color get success => const Color(0xFF89E487);
+  Color get success => const Color(0xFF00CB42);
   Color get error => const Color(0xFFFF4B55);
   Color get action => const Color(0xFF0057A8);
   Color get inactive => const Color(0xFFD3D3D3);
