@@ -123,6 +123,8 @@ class ChatPage extends ConsumerWidget {
                       fit: FlexFit.tight,
                       child: TextFormField(
                         controller: pageNotifier.userInputTextController,
+                        maxLines: 5,
+                        minLines: 1,
                         decoration: const InputDecoration(
                           hintText: '会話文を入力する',
                         ),
