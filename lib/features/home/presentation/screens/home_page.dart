@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team_tasan_tech/features/home/presentation/widgets/bottom_sheet_menu.dart';
+import 'package:team_tasan_tech/features/home/presentation/widgets/scene_chip.dart';
 
 import '../../application/page_model/home_page_model.dart';
 import '../../application/provider/home_page_notifier.dart';
@@ -16,6 +18,17 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homePageState = ref.watch(homePageStateProvider);
     final homePageStateNotifier = ref.watch(homePageStateProvider.notifier);
+    final TestLevel testLevel = homePageState.level;
+    final String appBarTitle;
+
+    switch (testLevel) {
+      case TestLevel.beginner:
+        appBarTitle = '初級モード';
+      case TestLevel.standard:
+        appBarTitle = '中級モード';
+      case TestLevel.advanced:
+        appBarTitle = '上級モード';
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -25,6 +38,7 @@ class HomePage extends ConsumerWidget {
             SliverAppBar(
               floating: false,
               toolbarHeight: $styles.dimens.appBarHeight,
+              title: Text(appBarTitle),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -48,9 +62,9 @@ class HomePage extends ConsumerWidget {
                               ),
                               SizedBox(height: $styles.insets.p12),
                               BottomSheetMenu<TestMode>(
-                                title: '自由なトピックで会話する',
-                                subtitle: 'テーマを自由に設定し、会話を始めます。',
-                                value: TestMode.freeTopic,
+                                title: '特定のトピックで練習',
+                                subtitle: 'シーンを選んで特定のトピックで会話を練習する。',
+                                value: TestMode.specificTopic,
                                 onTap: (newValue) {
                                   homePageStateNotifier
                                       .updateTestMode(newValue);
@@ -58,9 +72,9 @@ class HomePage extends ConsumerWidget {
                               ),
                               const AppDivider(),
                               BottomSheetMenu<TestMode>(
-                                title: '特定のトピックで練習',
-                                subtitle: 'シーンを選んで特定のトピックで会話を練習する。',
-                                value: TestMode.specificTopic,
+                                title: '自由なトピックで会話する',
+                                subtitle: 'テーマを自由に設定し、会話を始めます。',
+                                value: TestMode.freeTopic,
                                 onTap: (newValue) {
                                   homePageStateNotifier
                                       .updateTestMode(newValue);
@@ -77,13 +91,13 @@ class HomePage extends ConsumerWidget {
                     children: [
                       homePageState.testMode == TestMode.specificTopic
                           ? Text(
-                              '自由会話',
+                              'カテゴリー会話',
                               style: $styles.text.labelMedium.copyWith(
                                   color:
                                       $styles.colors.functionalColors.action),
                             )
                           : Text(
-                              'カテゴリー会話',
+                              '自由会話',
                               style: $styles.text.labelMedium.copyWith(
                                   color:
                                       $styles.colors.functionalColors.action),
@@ -104,6 +118,7 @@ class HomePage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: $styles.insets.p28),
                     Text(
                       'こんにちは永田さん👋',
                       style: $styles.text.headlineMedium,
@@ -116,31 +131,71 @@ class HomePage extends ConsumerWidget {
                     ),
                     SizedBox(height: $styles.insets.p40),
                     // * モード切り替え
-                    Column(
-                      children: [
-                        // ここのUIを会話設定によって変更
-                        TextFormField(
-                          decoration: InputDecoration(
-                            hintText: '例）入国審査の会話',
-                            hintStyle: $styles.text.titleMediumBold.copyWith(
-                                color:
-                                    $styles.colors.functionalColors.inactive),
+                    homePageState.testMode == TestMode.freeTopic
+                        ? TextFormField(
+                            decoration: InputDecoration(
+                              hintText: '例）入国審査の会話',
+                              hintStyle: $styles.text.titleMediumBold.copyWith(
+                                  color:
+                                      $styles.colors.functionalColors.inactive),
+                            ),
+                          )
+                        : Wrap(
+                            runSpacing: $styles.insets.p8,
+                            spacing: $styles.insets.p8,
+                            children: [
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  'ニューヨークのホテルで 🏨',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  '金曜の夜 👯‍♀',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  '美術館で 🎨',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  '英語で採用面接に挑戦 👔',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  '自己紹介の実践 🦄',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                              SceneChip(
+                                onTap: () {},
+                                title: Text(
+                                  '友達に電話で今週末の予定を尋ねる 🫶',
+                                  style: $styles.text.labelMediumBold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                     SizedBox(height: $styles.insets.p8),
-                    Text(
-                      '初級レベルでテストします🤖',
-                      style: $styles.text.labelLarge.copyWith(
-                        color: $styles.colors.keyColor.secondary,
-                      ),
-                    ),
                     const Spacer(),
-                    AppButton.solid(
-                      label: '会話を始める',
-                      onTap: () {},
-                    ),
+                    homePageState.testMode == TestMode.freeTopic
+                        ? AppButton.solid(
+                            label: '会話を始める',
+                            onTap: () {},
+                          )
+                        : const SizedBox.shrink(),
                     SizedBox(height: $styles.insets.p16),
                     AppButton.solid(
                       backgroundColor: $styles.colors.keyColor.tertiary,
@@ -215,103 +270,6 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class BottomSheetMenu<T> extends ConsumerWidget {
-  final String title;
-  final String? subtitle;
-  final T value;
-  final ValueChanged<T> onTap;
-
-  const BottomSheetMenu({
-    Key? key,
-    required this.title,
-    this.subtitle,
-    required this.value,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final homePageState = ref.watch(homePageStateProvider);
-    final isSelected =
-        (homePageState.testMode == value || homePageState.level == value);
-
-    return Material(
-      child: InkWell(
-        onTap: () => onTap(value),
-        child: Ink(
-          decoration: BoxDecoration(
-            color: $styles.colors.keyColor.transparent,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: $styles.insets.p16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        title,
-                        style: isSelected
-                            ? $styles.text.titleMediumBold.copyWith(
-                                color: $styles.colors.keyColor.secondary,
-                              )
-                            : $styles.text.bodySmall.copyWith(
-                                color: $styles.colors.textColors.secondary),
-                      ),
-                      if (subtitle != null)
-                        Text(subtitle!,
-                            style: isSelected
-                                ? $styles.text.bodySmall.copyWith(
-                                    color: $styles.colors.keyColor.secondary)
-                                : $styles.text.bodySmall.copyWith(
-                                    color:
-                                        $styles.colors.textColors.secondary)),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: isSelected,
-                  child: Icon(
-                    Icons.check_rounded,
-                    size: 32,
-                    color: $styles.colors.functionalColors.success,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SceneChip extends StatelessWidget {
-  final Widget title;
-  const SceneChip({
-    super.key,
-    required this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: $styles.insets.p10,
-        vertical: $styles.insets.p12,
-      ),
-      decoration: BoxDecoration(
-          color: $styles.colors.backgroundColors.accent,
-          borderRadius: BorderRadius.circular($styles.corners.md)),
-      child: title,
     );
   }
 }
