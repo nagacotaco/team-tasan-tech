@@ -69,22 +69,22 @@ class _$UserModelDtoCopyWithImpl<$Res, $Val extends UserModelDto>
 }
 
 /// @nodoc
-abstract class _$$_UserModelDtoCopyWith<$Res>
+abstract class _$$UserModelDtoImplCopyWith<$Res>
     implements $UserModelDtoCopyWith<$Res> {
-  factory _$$_UserModelDtoCopyWith(
-          _$_UserModelDto value, $Res Function(_$_UserModelDto) then) =
-      __$$_UserModelDtoCopyWithImpl<$Res>;
+  factory _$$UserModelDtoImplCopyWith(
+          _$UserModelDtoImpl value, $Res Function(_$UserModelDtoImpl) then) =
+      __$$UserModelDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(includeToJson: false) String docId, String name});
 }
 
 /// @nodoc
-class __$$_UserModelDtoCopyWithImpl<$Res>
-    extends _$UserModelDtoCopyWithImpl<$Res, _$_UserModelDto>
-    implements _$$_UserModelDtoCopyWith<$Res> {
-  __$$_UserModelDtoCopyWithImpl(
-      _$_UserModelDto _value, $Res Function(_$_UserModelDto) _then)
+class __$$UserModelDtoImplCopyWithImpl<$Res>
+    extends _$UserModelDtoCopyWithImpl<$Res, _$UserModelDtoImpl>
+    implements _$$UserModelDtoImplCopyWith<$Res> {
+  __$$UserModelDtoImplCopyWithImpl(
+      _$UserModelDtoImpl _value, $Res Function(_$UserModelDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_UserModelDtoCopyWithImpl<$Res>
     Object? docId = null,
     Object? name = null,
   }) {
-    return _then(_$_UserModelDto(
+    return _then(_$UserModelDtoImpl(
       docId: null == docId
           ? _value.docId
           : docId // ignore: cast_nullable_to_non_nullable
@@ -108,13 +108,13 @@ class __$$_UserModelDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserModelDto extends _UserModelDto {
-  const _$_UserModelDto(
+class _$UserModelDtoImpl extends _UserModelDto {
+  const _$UserModelDtoImpl(
       {@JsonKey(includeToJson: false) this.docId = '', this.name = ''})
       : super._();
 
-  factory _$_UserModelDto.fromJson(Map<String, dynamic> json) =>
-      _$$_UserModelDtoFromJson(json);
+  factory _$UserModelDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserModelDtoImplFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -132,7 +132,7 @@ class _$_UserModelDto extends _UserModelDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserModelDto &&
+            other is _$UserModelDtoImpl &&
             (identical(other.docId, docId) || other.docId == docId) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -144,12 +144,12 @@ class _$_UserModelDto extends _UserModelDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserModelDtoCopyWith<_$_UserModelDto> get copyWith =>
-      __$$_UserModelDtoCopyWithImpl<_$_UserModelDto>(this, _$identity);
+  _$$UserModelDtoImplCopyWith<_$UserModelDtoImpl> get copyWith =>
+      __$$UserModelDtoImplCopyWithImpl<_$UserModelDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserModelDtoToJson(
+    return _$$UserModelDtoImplToJson(
       this,
     );
   }
@@ -158,11 +158,11 @@ class _$_UserModelDto extends _UserModelDto {
 abstract class _UserModelDto extends UserModelDto {
   const factory _UserModelDto(
       {@JsonKey(includeToJson: false) final String docId,
-      final String name}) = _$_UserModelDto;
+      final String name}) = _$UserModelDtoImpl;
   const _UserModelDto._() : super._();
 
   factory _UserModelDto.fromJson(Map<String, dynamic> json) =
-      _$_UserModelDto.fromJson;
+      _$UserModelDtoImpl.fromJson;
 
   @override
   @JsonKey(includeToJson: false)
@@ -171,6 +171,6 @@ abstract class _UserModelDto extends UserModelDto {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_UserModelDtoCopyWith<_$_UserModelDto> get copyWith =>
+  _$$UserModelDtoImplCopyWith<_$UserModelDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

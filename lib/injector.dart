@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:team_tasan_tech/features/chat/domain/use_cases/chat_gpt_use_case.dart';
+import 'package:team_tasan_tech/features/chat/infrastructure/chat_gpt_repository.dart';
 
 import 'features/auth/domain/use_cases/auth_use_case.dart';
 import 'features/auth/infrastructure/firebase/fireauth_repository.dart';
@@ -13,5 +15,8 @@ void initSingletons() {
   );
   injector.registerSingleton<UserModelUseCase>(
     UserModelUseCase(FirestoreUserModelRepo()),
+  );
+  injector.registerSingleton<ChatGptUseCase>(
+    ChatGptUseCase(ChatGptRepository()),
   );
 }
