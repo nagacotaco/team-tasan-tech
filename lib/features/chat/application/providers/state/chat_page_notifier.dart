@@ -99,3 +99,58 @@ class ChatPageNotifier extends _$ChatPageNotifier {
     print(state.conversationList);
   }
 }
+
+final dummyChatModel = ChatModel(
+  theme: '新しいギターを買いたい',
+  day: DateTime.now(),
+  conversationList: [
+    const ChatGptConversationModel(
+        correct: '',
+        reason: '',
+        res: 'Good! What is your budget?',
+        score: 100,
+        role: 'system'),
+    const ChatGptConversationModel(
+      correct: '',
+      reason: '',
+      res: 'I have 30000 yen.',
+      score: 0,
+      role: 'user',
+    ),
+    const ChatGptConversationModel(
+      correct: 'Budget is 30,000 yen.',
+      reason: '予算の英語は"budget"です。このような単語を使用したほうが望ましいですが、おっしゃった回答でも問題はありません。',
+      res: 'Great! What kind of guiter type do you want?',
+      score: 80,
+      role: 'system',
+    ),
+    const ChatGptConversationModel(
+      correct: '',
+      reason: '',
+      res: "I have a Les Paul now and I'd like a strat type.",
+      score: 0,
+      role: 'user',
+    ),
+    const ChatGptConversationModel(
+      correct: '',
+      reason: '',
+      res: 'Great! What kind of guiter type do you want?',
+      score: 80,
+      role: 'system',
+    ),
+    const ChatGptConversationModel(
+      correct: '',
+      reason: '',
+      res: "xxxxxxxxxxxxx",
+      score: 0,
+      role: 'user',
+    ),
+    const ChatGptConversationModel(
+      correct: '最後の返答',
+      reason: '最後の返答',
+      res: '最後の返答',
+      score: 60,
+      role: 'system',
+    ),
+  ],
+);

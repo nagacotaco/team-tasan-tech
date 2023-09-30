@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:team_tasan_tech/features/auth/presentation/views/create_account_page.dart';
 import 'package:team_tasan_tech/features/chat/presentation/chat_page.dart';
+import 'package:team_tasan_tech/features/chat/presentation/report_page.dart';
 import 'package:team_tasan_tech/features/samples/app_bar_sample/app_bar_sample.dart';
 import 'package:team_tasan_tech/features/samples/list_tile_sample/list_tile_sample.dart';
 
@@ -31,6 +32,7 @@ enum Routes {
 
   ///
   chat,
+  report,
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -100,6 +102,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/chat',
         name: Routes.chat.name,
         builder: (context, state) => const ChatPage(),
+      ),
+      GoRoute(
+        path: '/report',
+        name: Routes.report.name,
+        builder: (context, state) => const ReportPage(),
       )
     ],
     redirect: (context, state) async {
