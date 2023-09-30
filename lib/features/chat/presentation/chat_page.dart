@@ -2,6 +2,7 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/state/chat_page_notifier.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/presentation/widgets/chat_bubble.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
@@ -45,7 +46,7 @@ class ChatPage extends ConsumerWidget {
                 ),
                 // * sample 3
                 SliverAppBar(
-                  title: const Text('シーンタイトルを受け取る'),
+                  title: Text(ref.read(themeProvider)),
                   toolbarHeight: $styles.dimens.appBarHeight,
                   // falseでタイトル左側に表示
                   centerTitle: false,
@@ -115,7 +116,14 @@ class ChatPage extends ConsumerWidget {
                     ),
                     SizedBox(width: $styles.insets.p8),
                     InkWell(
-                      onTap: () => pageNotifier.onSendMessage(),
+                      onTap: () async {
+                        await pageNotifier.onSendMessage();
+                        if (pageNotifier.counter == 4) {
+                          // ignore: use_build_context_synchronously
+                          // TODO: 遷移を追加
+                          // context.pushNamed(Routes.appBarSample.name);
+                        }
+                      },
                       child: Container(
                         height: $styles.insets.p40,
                         width: $styles.insets.p40,
