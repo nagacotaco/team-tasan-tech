@@ -37,15 +37,15 @@ class ChatBubble extends StatelessWidget {
     required String correctText,
     required String reasonText,
     required int score,
-    required bool isUserComment,
   }) {
     return ChatBubble(
       chatText: chatText,
-      isUserComment: isUserComment,
+      isUserComment: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'あなたの回答',
+            'あなたの回答: $score点',
             style: $styles.text.labelLargeBold,
           ),
           SizedBox(height: $styles.insets.p2),
@@ -54,20 +54,24 @@ class ChatBubble extends StatelessWidget {
           const AppDivider(),
           SizedBox(height: $styles.insets.p12),
           Text(
-            '$score点',
+            '修正',
             style: $styles.text.labelLargeBold.copyWith(
               color: $styles.colors.functionalColors.error,
             ),
           ),
           SizedBox(height: $styles.insets.p2),
           Text(
-            correctText,
+            correctText.isNotEmpty ? correctText : '修正なし',
             style: $styles.text.labelLargeBold.copyWith(
               color: $styles.colors.textColors.tertiary,
             ),
           ),
-          SizedBox(height: $styles.insets.p2),
-          Text(chatText, style: $styles.text.bodySmall)
+          reasonText.isNotEmpty
+              ? Padding(
+                  padding: EdgeInsets.only(top: $styles.insets.p2),
+                  child: Text(reasonText, style: $styles.text.bodySmall),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
