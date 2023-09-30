@@ -4,6 +4,8 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:team_tasan_tech/app/app_strings.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/level_provider.dart';
+import 'package:team_tasan_tech/features/chat/application/providers/theme_provider.dart';
 import 'package:team_tasan_tech/features/chat/domain/use_cases/chat_gpt_use_case.dart';
 import 'package:team_tasan_tech/injector.dart';
 import 'package:team_tasan_tech/models/domain/chat_gpt_respons_model.dart';
@@ -26,36 +28,28 @@ class ChatPageNotifier extends _$ChatPageNotifier {
 
   /// chatGPTの全会話リスト
   /// 画面表示にも使用
-  List<OpenAIChatCompletionChoiceMessageModel> chatGptModelList = [
-    OpenAIChatCompletionChoiceMessageModel(
-      content: ChatGptReqStrings.firstPrompt,
-      role: OpenAIChatMessageRole.user,
-    ),
-  ];
+  List<OpenAIChatCompletionChoiceMessageModel> chatGptModelList = [];
 
   @override
   ChatModel build() {
     ref.onDispose(() {
       userInputTextController.dispose();
     });
-    initChatGpt();
+    initChatGpt(ref.read(themeProvider), ref.read(levelProvider));
     return const ChatModel();
   }
 
-  Future<void> initChatGpt() async {
+  Future<void> initChatGpt(String theme, String level) async {
     debugPrint('chatGPTを初期化します');
-    final response = await _chatGptUseCase.sendMessage(chatGptModelList);
-    chatGptModelList.add(response.choices.first.message);
-    counter++;
-    var json = jsonDecode(response.choices.first.message.content);
-    // レスポンスをstateへ適応
-    state = state.copyWith(
-      chatGptResList: [
-        ...state.chatGptResList,
-        ChatGptResponseModel.fromJson(json)
-      ],
+    chatGptModelList.add(
+      OpenAIChatCompletionChoiceMessageModel(
+        content: ChatGptReqStrings.firstPrompt
+            .replaceAll('SCENE_TEXT', theme)
+            .replaceAll('CONVERSATION_LEVEL', level),
+        role: OpenAIChatMessageRole.user,
+      ),
     );
-    print(response.choices.first.message);
+    sendFunction();
   }
 
   /// ユーザーが入力した文章の送信時処理
@@ -75,8 +69,11 @@ class ChatPageNotifier extends _$ChatPageNotifier {
     userInputTextController.clear();
 
     chatGptModelList.add(newMessageModel);
+    sendFunction();
+  }
 
-    // chatGPTへ送信
+  Future<void> sendFunction() async {
+// chatGPTへ送信
     final response = await _chatGptUseCase.sendMessage(chatGptModelList);
     print(response);
     // 返答をjson化
@@ -84,6 +81,8 @@ class ChatPageNotifier extends _$ChatPageNotifier {
     print(json);
 
     chatGptModelList.add(response.choices.first.message);
+
+    counter++;
 
     // レスポンスをstateへ適応
     state = state.copyWith(

@@ -10,6 +10,7 @@ class ChatGptResponseModel with _$ChatGptResponseModel {
     @Default('') String correct,
     @Default('') String reason,
     @Default('') String res,
+    @Default(0) int score,
   }) = _ChatGptResponseModel;
   factory ChatGptResponseModel.fromJson(Map<String, dynamic> json) =>
       _$ChatGptResponseModelFromJson(json);

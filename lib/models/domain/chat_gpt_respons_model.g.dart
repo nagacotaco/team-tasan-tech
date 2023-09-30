@@ -12,6 +12,7 @@ _$ChatGptResponseModelImpl _$$ChatGptResponseModelImplFromJson(
       correct: json['correct'] as String? ?? '',
       reason: json['reason'] as String? ?? '',
       res: json['res'] as String? ?? '',
+      score: json['score'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$ChatGptResponseModelImplToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$ChatGptResponseModelImplToJson(
       'correct': instance.correct,
       'reason': instance.reason,
       'res': instance.res,
+      'score': instance.score,
     };

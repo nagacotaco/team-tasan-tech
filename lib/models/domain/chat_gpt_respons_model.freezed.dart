@@ -23,6 +23,7 @@ mixin _$ChatGptResponseModel {
   String get correct => throw _privateConstructorUsedError;
   String get reason => throw _privateConstructorUsedError;
   String get res => throw _privateConstructorUsedError;
+  int get score => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $ChatGptResponseModelCopyWith<$Res> {
           $Res Function(ChatGptResponseModel) then) =
       _$ChatGptResponseModelCopyWithImpl<$Res, ChatGptResponseModel>;
   @useResult
-  $Res call({String correct, String reason, String res});
+  $Res call({String correct, String reason, String res, int score});
 }
 
 /// @nodoc
@@ -56,6 +57,7 @@ class _$ChatGptResponseModelCopyWithImpl<$Res,
     Object? correct = null,
     Object? reason = null,
     Object? res = null,
+    Object? score = null,
   }) {
     return _then(_value.copyWith(
       correct: null == correct
@@ -70,6 +72,10 @@ class _$ChatGptResponseModelCopyWithImpl<$Res,
           ? _value.res
           : res // ignore: cast_nullable_to_non_nullable
               as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -82,7 +88,7 @@ abstract class _$$ChatGptResponseModelImplCopyWith<$Res>
       __$$ChatGptResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String correct, String reason, String res});
+  $Res call({String correct, String reason, String res, int score});
 }
 
 /// @nodoc
@@ -99,6 +105,7 @@ class __$$ChatGptResponseModelImplCopyWithImpl<$Res>
     Object? correct = null,
     Object? reason = null,
     Object? res = null,
+    Object? score = null,
   }) {
     return _then(_$ChatGptResponseModelImpl(
       correct: null == correct
@@ -113,6 +120,10 @@ class __$$ChatGptResponseModelImplCopyWithImpl<$Res>
           ? _value.res
           : res // ignore: cast_nullable_to_non_nullable
               as String,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -121,7 +132,7 @@ class __$$ChatGptResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChatGptResponseModelImpl extends _ChatGptResponseModel {
   const _$ChatGptResponseModelImpl(
-      {this.correct = '', this.reason = '', this.res = ''})
+      {this.correct = '', this.reason = '', this.res = '', this.score = 0})
       : super._();
 
   factory _$ChatGptResponseModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -136,10 +147,13 @@ class _$ChatGptResponseModelImpl extends _ChatGptResponseModel {
   @override
   @JsonKey()
   final String res;
+  @override
+  @JsonKey()
+  final int score;
 
   @override
   String toString() {
-    return 'ChatGptResponseModel(correct: $correct, reason: $reason, res: $res)';
+    return 'ChatGptResponseModel(correct: $correct, reason: $reason, res: $res, score: $score)';
   }
 
   @override
@@ -149,12 +163,13 @@ class _$ChatGptResponseModelImpl extends _ChatGptResponseModel {
             other is _$ChatGptResponseModelImpl &&
             (identical(other.correct, correct) || other.correct == correct) &&
             (identical(other.reason, reason) || other.reason == reason) &&
-            (identical(other.res, res) || other.res == res));
+            (identical(other.res, res) || other.res == res) &&
+            (identical(other.score, score) || other.score == score));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, correct, reason, res);
+  int get hashCode => Object.hash(runtimeType, correct, reason, res, score);
 
   @JsonKey(ignore: true)
   @override
@@ -176,7 +191,8 @@ abstract class _ChatGptResponseModel extends ChatGptResponseModel {
   const factory _ChatGptResponseModel(
       {final String correct,
       final String reason,
-      final String res}) = _$ChatGptResponseModelImpl;
+      final String res,
+      final int score}) = _$ChatGptResponseModelImpl;
   const _ChatGptResponseModel._() : super._();
 
   factory _ChatGptResponseModel.fromJson(Map<String, dynamic> json) =
@@ -188,6 +204,8 @@ abstract class _ChatGptResponseModel extends ChatGptResponseModel {
   String get reason;
   @override
   String get res;
+  @override
+  int get score;
   @override
   @JsonKey(ignore: true)
   _$$ChatGptResponseModelImplCopyWith<_$ChatGptResponseModelImpl>
