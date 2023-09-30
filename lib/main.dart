@@ -1,3 +1,4 @@
+import 'package:dart_openai/dart_openai.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,11 +26,7 @@ Future<void> runMain() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  //status bar color
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-  //   statusBarColor: AppColors.white,
-  //   statusBarBrightness: Brightness.light,
-  // ));
+  OpenAI.apiKey = const String.fromEnvironment('API_KEY');
 
   runApp(ProviderScope(observers: [Observers()], child: const MainApp()));
 }

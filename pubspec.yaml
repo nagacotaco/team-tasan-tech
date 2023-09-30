@@ -19,6 +19,7 @@ dependencies:
   firebase_core:
   cloud_firestore:
   get_it:
+  dart_openai: 
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:team_tasan_tech/app/app_strings.dart';
 import 'package:team_tasan_tech/features/chat/domain/use_cases/chat_gpt_use_case.dart';
 import 'package:team_tasan_tech/injector.dart';
 import 'package:team_tasan_tech/models/domain/chat_gpt_respons_model.dart';
@@ -9,28 +13,85 @@ part 'chat_page_notifier.g.dart';
 
 @riverpod
 class ChatPageNotifier extends _$ChatPageNotifier {
-  final userInputText = TextEditingController();
   final _chatGptUseCase = injector<ChatGptUseCase>();
+
+  /// ユーザー入力文章
+  final userInputTextController = TextEditingController();
+
+  /// ローディング状況で画面描画を制御
+  bool isLoading = false;
+
+  /// 会話ラリーの回数カウンター
+  int counter = 0;
+
+  /// chatGPTの全会話リスト
+  /// 画面表示にも使用
+  List<OpenAIChatCompletionChoiceMessageModel> chatGptModelList = [
+    OpenAIChatCompletionChoiceMessageModel(
+      content: ChatGptReqStrings.firstPrompt,
+      role: OpenAIChatMessageRole.user,
+    ),
+  ];
+
   @override
   ChatModel build() {
     ref.onDispose(() {
-      userInputText.dispose();
+      userInputTextController.dispose();
     });
+    initChatGpt();
     return const ChatModel();
+  }
+
+  Future<void> initChatGpt() async {
+    debugPrint('chatGPTを初期化します');
+    final response = await _chatGptUseCase.sendMessage(chatGptModelList);
+    chatGptModelList.add(response.choices.first.message);
+    counter++;
+    var json = jsonDecode(response.choices.first.message.content);
+    // レスポンスをstateへ適応
+    state = state.copyWith(
+      chatGptResList: [
+        ...state.chatGptResList,
+        ChatGptResponseModel.fromJson(json)
+      ],
+    );
+    print(response.choices.first.message);
   }
 
   /// ユーザーが入力した文章の送信時処理
   Future<void> onSendMessage() async {
+    debugPrint('chaGPTへメッセージを送信します。');
+    state = state.copyWith(userCommentList: [
+      ...state.userCommentList,
+      userInputTextController.text,
+    ]);
+
+    final newMessageModel = OpenAIChatCompletionChoiceMessageModel(
+      content: userInputTextController.text,
+      role: OpenAIChatMessageRole.user,
+    );
+
+    // インプットフィールドをクリア
+    userInputTextController.clear();
+
+    chatGptModelList.add(newMessageModel);
+
     // chatGPTへ送信
-    final ChatGptResponseModel response =
-        await _chatGptUseCase.sendMessage(userInputText.text);
+    final response = await _chatGptUseCase.sendMessage(chatGptModelList);
+    print(response);
+    // 返答をjson化
+    var json = jsonDecode(response.choices.first.message.content);
+    print(json);
+
+    chatGptModelList.add(response.choices.first.message);
+
     // レスポンスをstateへ適応
     state = state.copyWith(
-      userCommentList: state.userCommentList..add(userInputText.text),
-      chatGptResList: state.chatGptResList..add(response),
+      chatGptResList: [
+        ...state.chatGptResList,
+        ChatGptResponseModel.fromJson(json)
+      ],
     );
-    // インプットフィールドをクリア
-    userInputText.clear();
   }
 
   /// chatGPT送信前のプロンプト処理

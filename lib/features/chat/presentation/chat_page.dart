@@ -1,3 +1,4 @@
+import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team_tasan_tech/features/chat/application/providers/state/chat_page_notifier.dart';
@@ -15,6 +16,8 @@ class ChatPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const double textFormFieldHeight = 60.0;
+    final pageState = ref.watch(chatPageNotifierProvider);
+    final pageNotifier = ref.watch(chatPageNotifierProvider.notifier);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -49,7 +52,7 @@ class ChatPage extends ConsumerWidget {
                   automaticallyImplyLeading: false,
                   // スクロール時にアップバーを固定
                   pinned: true,
-                  actions: [
+                  actions: const [
                     // IconButton(
                     //     alignment: Alignment.topCenter,
                     //     onPressed: () {},
@@ -64,43 +67,22 @@ class ChatPage extends ConsumerWidget {
                     //     ))
                   ],
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: $styles.insets.p16,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            for (int i = 0;
-                                i < dummyChatModel.userCommentList.length;
-                                i++) ...{
-                              Column(
-                                children: [
-                                  ChatBubble.normal(
-                                    chatText:
-                                        dummyChatModel.chatGptResList[i].res,
-                                    isUserComment: false,
-                                  ),
-                                  ChatBubble.normal(
-                                    chatText: dummyChatModel.userCommentList[i],
-                                    isUserComment: true,
-                                  ),
-                                ],
-                              )
-                            },
-
-                            /// textFormFieldHeight の高さ
-                            const SizedBox(height: textFormFieldHeight)
-                          ],
-                        ),
+                SliverList.builder(
+                  itemCount: pageNotifier.chatGptModelList.length,
+                  itemBuilder: (context, i) {
+                    if (i == 0) return const SizedBox.shrink();
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: $styles.insets.p16,
                       ),
-                    ],
-                  ),
-                )
+                      child: ChatBubble.normal(
+                        chatText: pageNotifier.chatGptModelList[i].content,
+                        isUserComment: pageNotifier.chatGptModelList[i].role ==
+                            OpenAIChatMessageRole.user,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             Align(
@@ -115,10 +97,13 @@ class ChatPage extends ConsumerWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: TextFormField(
+                        controller: pageNotifier.userInputTextController,
                         decoration: const InputDecoration(
                           hintText: '会話文を入力する',
                         ),
                         validator: (value) {
+                          return null;
+
                           // todo 空文字の場合はエラー返す（日本語がある場合どうする？）
                           // final result = ValidationUtil.isValidEmail(value ?? '');
                           // if (!result['isValid']) {
@@ -130,9 +115,7 @@ class ChatPage extends ConsumerWidget {
                     ),
                     SizedBox(width: $styles.insets.p8),
                     InkWell(
-                      onTap: () {
-                        debugPrint('apiリクエスト');
-                      },
+                      onTap: () => pageNotifier.onSendMessage(),
                       child: Container(
                         height: $styles.insets.p40,
                         width: $styles.insets.p40,
