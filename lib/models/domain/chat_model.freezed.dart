@@ -29,6 +29,7 @@ mixin _$ChatModel {
   List<String> get reviweList => throw _privateConstructorUsedError;
   bool get canContinue => throw _privateConstructorUsedError;
   bool get isStartFromUser => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   DateTime? get day => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,6 +52,7 @@ abstract class $ChatModelCopyWith<$Res> {
       List<String> reviweList,
       bool canContinue,
       bool isStartFromUser,
+      bool isLoading,
       DateTime? day});
 }
 
@@ -75,6 +77,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? reviweList = null,
     Object? canContinue = null,
     Object? isStartFromUser = null,
+    Object? isLoading = null,
     Object? day = freezed,
   }) {
     return _then(_value.copyWith(
@@ -110,6 +113,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.isStartFromUser
           : isStartFromUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -135,6 +142,7 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       List<String> reviweList,
       bool canContinue,
       bool isStartFromUser,
+      bool isLoading,
       DateTime? day});
 }
 
@@ -157,6 +165,7 @@ class __$$ChatModelImplCopyWithImpl<$Res>
     Object? reviweList = null,
     Object? canContinue = null,
     Object? isStartFromUser = null,
+    Object? isLoading = null,
     Object? day = freezed,
   }) {
     return _then(_$ChatModelImpl(
@@ -192,6 +201,10 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.isStartFromUser
           : isStartFromUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -212,6 +225,7 @@ class _$ChatModelImpl extends _ChatModel {
       final List<String> reviweList = const [],
       this.canContinue = true,
       this.isStartFromUser = false,
+      this.isLoading = false,
       this.day})
       : _userCommentList = userCommentList,
         _chatGptResList = chatGptResList,
@@ -264,11 +278,14 @@ class _$ChatModelImpl extends _ChatModel {
   @JsonKey()
   final bool isStartFromUser;
   @override
+  @JsonKey()
+  final bool isLoading;
+  @override
   final DateTime? day;
 
   @override
   String toString() {
-    return 'ChatModel(docId: $docId, theme: $theme, score: $score, userCommentList: $userCommentList, chatGptResList: $chatGptResList, reviweList: $reviweList, canContinue: $canContinue, isStartFromUser: $isStartFromUser, day: $day)';
+    return 'ChatModel(docId: $docId, theme: $theme, score: $score, userCommentList: $userCommentList, chatGptResList: $chatGptResList, reviweList: $reviweList, canContinue: $canContinue, isStartFromUser: $isStartFromUser, isLoading: $isLoading, day: $day)';
   }
 
   @override
@@ -289,6 +306,8 @@ class _$ChatModelImpl extends _ChatModel {
                 other.canContinue == canContinue) &&
             (identical(other.isStartFromUser, isStartFromUser) ||
                 other.isStartFromUser == isStartFromUser) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.day, day) || other.day == day));
   }
 
@@ -304,6 +323,7 @@ class _$ChatModelImpl extends _ChatModel {
       const DeepCollectionEquality().hash(_reviweList),
       canContinue,
       isStartFromUser,
+      isLoading,
       day);
 
   @JsonKey(ignore: true)
@@ -330,6 +350,7 @@ abstract class _ChatModel extends ChatModel {
       final List<String> reviweList,
       final bool canContinue,
       final bool isStartFromUser,
+      final bool isLoading,
       final DateTime? day}) = _$ChatModelImpl;
   const _ChatModel._() : super._();
 
@@ -352,6 +373,8 @@ abstract class _ChatModel extends ChatModel {
   bool get canContinue;
   @override
   bool get isStartFromUser;
+  @override
+  bool get isLoading;
   @override
   DateTime? get day;
   @override

@@ -86,6 +86,19 @@ class ChatPage extends ConsumerWidget {
                       );
                     },
                   ),
+                  SliverToBoxAdapter(
+                    child: pageState.isLoading
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: $styles.insets.p16,
+                            ),
+                            child: ChatBubble.normal(
+                              chatText: '{"res": "....."}',
+                              isUserComment: false,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                 ],
               ),
             ),
