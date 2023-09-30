@@ -16,7 +16,7 @@ class _KeyColors {
   const _KeyColors();
   Color get primary => const Color(0xFF0057A8);
   Color get secondary => const Color(0xFF0070BA);
-  Color get tertiary => const Color(0xFFA5D2FF);
+  Color get tertiary => const Color(0xFFEBF7FD);
   Color get accent => const Color(0xFFE0E0E0);
   Color get transparent => const Color(0x00000000);
 }

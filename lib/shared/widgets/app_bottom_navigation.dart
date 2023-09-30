@@ -19,6 +19,12 @@ class AppBottomNavigation extends StatelessWidget {
             selectedIcon:
                 Icon(Icons.home, color: $styles.colors.keyColor.primary)),
         NavigationDestination(
+          icon: const Icon(Icons.smart_toy_outlined),
+          label: '会話テスト',
+          selectedIcon:
+              Icon(Icons.smart_toy, color: $styles.colors.keyColor.primary),
+        ),
+        NavigationDestination(
           icon: const Icon(Icons.settings_outlined),
           label: '設定',
           selectedIcon:
