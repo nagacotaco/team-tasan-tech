@@ -88,6 +88,7 @@ class ReportPage extends ConsumerWidget {
                     child: ChatBubble.normal(
                       chatText: conversationList[i].res,
                       isUserComment: false,
+                      isAnimation: false,
                     ),
                   );
                 }
@@ -105,6 +106,7 @@ class ReportPage extends ConsumerWidget {
                       : ChatBubble.normal(
                           chatText: conversationList[i].res,
                           isUserComment: false,
+                          isAnimation: false,
                         ),
                 );
               },
