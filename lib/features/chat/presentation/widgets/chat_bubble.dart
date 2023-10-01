@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:team_tasan_tech/shared/extensions/build_context_extensions.dart';
 
@@ -24,11 +25,18 @@ class ChatBubble extends StatelessWidget {
   factory ChatBubble.normal({
     required String chatText,
     required bool isUserComment,
+    bool isAnimation = true,
+    int? totalRepeatCount,
   }) {
     return ChatBubble(
       chatText: chatText,
       isUserComment: isUserComment,
-      child: Text(chatText, style: $styles.text.bodySmall),
+      child: isUserComment || !isAnimation
+          ? Text(chatText, style: $styles.text.bodySmall)
+          : AnimatedTextKit(
+              animatedTexts: [TypewriterAnimatedText(chatText)],
+              totalRepeatCount: totalRepeatCount ?? 3,
+            ),
     );
   }
 
@@ -80,28 +88,32 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: isUserComment ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.only(bottom: $styles.insets.p16),
-        padding: EdgeInsets.all($styles.insets.p12),
-        width: context.sizeWidth * 0.7,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: isUserComment
-                ? Radius.circular($styles.corners.md)
-                : Radius.zero,
-            topRight: Radius.circular($styles.corners.md),
-            bottomLeft: Radius.circular($styles.corners.md),
-            bottomRight: isUserComment
-                ? Radius.zero
-                : Radius.circular($styles.corners.md),
+    return Flexible(
+      child: Align(
+        alignment: isUserComment ? Alignment.centerRight : Alignment.centerLeft,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: context.sizeWidth * 0.7),
+          child: Container(
+            margin: EdgeInsets.only(bottom: $styles.insets.p16),
+            padding: EdgeInsets.all($styles.insets.p12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: isUserComment
+                    ? Radius.circular($styles.corners.md)
+                    : Radius.zero,
+                topRight: Radius.circular($styles.corners.md),
+                bottomLeft: Radius.circular($styles.corners.md),
+                bottomRight: isUserComment
+                    ? Radius.zero
+                    : Radius.circular($styles.corners.md),
+              ),
+              color: isUserComment
+                  ? $styles.colors.backgroundColors.accent
+                  : $styles.colors.keyColor.tertiary,
+            ),
+            child: child,
           ),
-          color: isUserComment
-              ? $styles.colors.backgroundColors.accent
-              : $styles.colors.keyColor.tertiary,
         ),
-        child: child,
       ),
     );
   }
