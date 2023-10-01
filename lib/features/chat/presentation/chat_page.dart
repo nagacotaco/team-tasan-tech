@@ -144,8 +144,7 @@ class ChatPage extends ConsumerWidget {
                     InkWell(
                       onTap: () async {
                         await pageNotifier.onSendMessage();
-                        if (!pageState.isLoading &&
-                            pageNotifier.counter >= 10) {
+                        if (!pageState.isLoading && pageNotifier.counter >= 7) {
                           // 完了した会話を保持
                           pageNotifier.setFinishedConversation();
                           // ignore: use_build_context_synchronously

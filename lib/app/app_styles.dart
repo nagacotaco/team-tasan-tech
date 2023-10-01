@@ -178,7 +178,6 @@ class AppStyle {
       titleTextStyle: text.titleMediumBold,
       toolbarTextStyle: text.titleMedium,
       backgroundColor: colors.backgroundColors.white,
-      // `toolbarHeight`はsliverAppBarには適応されないので個別の設定が必要
       toolbarHeight: dimens.appBarHeight,
       surfaceTintColor: colors.backgroundColors.white,
       elevation: 0,
@@ -196,7 +195,6 @@ class AppStyle {
       inputDecorationTheme: inputDecorationTheme,
       textSelectionTheme: textSelectionThemeData,
       appBarTheme: appBarTheme,
-      // todo 商用利用可能だがライセンスの表記が推奨されているため記載方法を検討する
       fontFamily: 'LineSeed',
       splashColor: colors.keyColor.transparent,
     );
