@@ -25,7 +25,7 @@ class ChatPageNotifier extends _$ChatPageNotifier {
   int counter = 0;
 
   /// 会話ラリーの上限
-  final int maxCounter = 10;
+  final int maxCounter = 7;
 
   // 進捗（0.0 ~ 1.0）
   double get progress => counter / maxCounter;

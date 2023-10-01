@@ -124,26 +124,51 @@ class HomePage extends ConsumerWidget {
                     SizedBox(height: $styles.insets.p28),
                     Text(
                       'こんにちは永田さん👋',
-                      style: $styles.text.headlineMedium,
+                      style: $styles.text.headlineLarge,
                     ),
                     SizedBox(height: $styles.insets.p4),
                     Text(
                       '今日は何の話をしましょうか？',
-                      style: $styles.text.titleMediumBold
+                      style: $styles.text.titleLargeBold
                           .copyWith(color: $styles.colors.textColors.tertiary),
                     ),
                     SizedBox(height: $styles.insets.p40),
                     // * モード切り替え
                     homePageState.testMode == TestMode.freeTopic
-                        ? TextFormField(
-                            controller:
-                                homePageStateNotifier.themeInputController,
-                            decoration: InputDecoration(
-                              hintText: '例）入国審査の会話',
-                              hintStyle: $styles.text.titleMediumBold.copyWith(
-                                  color:
-                                      $styles.colors.functionalColors.inactive),
-                            ),
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: $styles.insets.p12),
+                              TextFormField(
+                                controller:
+                                    homePageStateNotifier.themeInputController,
+                                decoration: InputDecoration(
+                                  hintText: '例）入国審査の会話',
+                                  hintStyle: $styles.text.titleMediumBold
+                                      .copyWith(
+                                          color: $styles.colors.functionalColors
+                                              .inactive),
+                                ),
+                              ),
+                              SizedBox(height: $styles.insets.p16),
+                              Text(
+                                '・タクシーで目的地まで',
+                                style: $styles.text.labelMedium.copyWith(
+                                    color: $styles.colors.textColors.tertiary),
+                              ),
+                              SizedBox(height: $styles.insets.p4),
+                              Text(
+                                '・レストランで料理を頼む',
+                                style: $styles.text.labelMedium.copyWith(
+                                    color: $styles.colors.textColors.tertiary),
+                              ),
+                              SizedBox(height: $styles.insets.p4),
+                              Text(
+                                '・病院で診察を受ける',
+                                style: $styles.text.labelMedium.copyWith(
+                                    color: $styles.colors.textColors.tertiary),
+                              )
+                            ],
                           )
                         : Wrap(
                             runSpacing: $styles.insets.p8,
