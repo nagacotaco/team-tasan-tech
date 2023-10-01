@@ -88,31 +88,29 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Align(
-        alignment: isUserComment ? Alignment.centerRight : Alignment.centerLeft,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: context.sizeWidth * 0.7),
-          child: Container(
-            margin: EdgeInsets.only(bottom: $styles.insets.p16),
-            padding: EdgeInsets.all($styles.insets.p12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: isUserComment
-                    ? Radius.circular($styles.corners.md)
-                    : Radius.zero,
-                topRight: Radius.circular($styles.corners.md),
-                bottomLeft: Radius.circular($styles.corners.md),
-                bottomRight: isUserComment
-                    ? Radius.zero
-                    : Radius.circular($styles.corners.md),
-              ),
-              color: isUserComment
-                  ? $styles.colors.backgroundColors.accent
-                  : $styles.colors.keyColor.tertiary,
+    return Align(
+      alignment: isUserComment ? Alignment.centerRight : Alignment.centerLeft,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: context.sizeWidth * 0.7),
+        child: Container(
+          margin: EdgeInsets.only(bottom: $styles.insets.p16),
+          padding: EdgeInsets.all($styles.insets.p12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: isUserComment
+                  ? Radius.circular($styles.corners.md)
+                  : Radius.zero,
+              topRight: Radius.circular($styles.corners.md),
+              bottomLeft: Radius.circular($styles.corners.md),
+              bottomRight: isUserComment
+                  ? Radius.zero
+                  : Radius.circular($styles.corners.md),
             ),
-            child: child,
+            color: isUserComment
+                ? $styles.colors.backgroundColors.accent
+                : $styles.colors.keyColor.tertiary,
           ),
+          child: child,
         ),
       ),
     );
