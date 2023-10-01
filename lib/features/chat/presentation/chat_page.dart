@@ -76,6 +76,7 @@ class ChatPage extends ConsumerWidget {
                           chatText: pageState.conversationList[i].res,
                           isUserComment:
                               pageState.conversationList[i].role == 'user',
+                          totalRepeatCount: 1,
                         ),
                       );
                     },
